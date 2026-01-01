@@ -30,14 +30,14 @@
         </h3>
         <div class="well">
 			<?php if ( $controller->check() ): ?>
-				<?php _e( "You have the latest WordPress version installed.", cp_defender()->domain ) ?>
+				<?php echo function_exists('classicpress_version') ? __( "You have the latest ClassicPress version installed.", cp_defender()->domain ) : __( "You have the latest WordPress version installed.", cp_defender()->domain ) ?>
 			<?php else: ?>
                 <form method="post" class="hardener-frm">
 					<?php $controller->createNonceField(); ?>
                     <input type="hidden" name="action" value="processHardener"/>
                     <input type="hidden" name="slug" value="<?php echo $controller::$slug ?>"/>
                     <a href="<?php echo network_admin_url('update-core.php') ?>" class="button float-r">
-						<?php esc_html_e( "Update WordPress", cp_defender()->domain ) ?>
+						<?php echo function_exists('classicpress_version') ? esc_html__( "Update ClassicPress", cp_defender()->domain ) : esc_html__( "Update WordPress", cp_defender()->domain ) ?>
                     </a>
                 </form>
 				<?php $controller->showIgnoreForm() ?>

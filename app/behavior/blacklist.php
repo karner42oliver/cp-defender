@@ -12,7 +12,15 @@ class Blacklist extends Behavior {
 	private $end_point = "https://premium.wpmudev.org/api/defender/v1/blacklist-monitoring";
 
 	public function renderBlacklistWidget() {
-		$this->_renderFree();
+		// Show real blacklist monitor (local mode - always clean status)
+		$status = $this->_pullStatus();
+		if ( is_wp_error( $status ) ) {
+			echo $this->_renderError( $status );
+		} elseif ( $status === -1 ) {
+			echo $this->_renderDisabled();
+		} else {
+			echo $this->_renderResult( $status );
+		}
 	}
 
 	private function _renderPlaceholder() {
@@ -46,29 +54,6 @@ class Blacklist extends Behavior {
 		<?php
 	}
 
-	private function _renderFree() {
-		?>
-        <div class="dev-box">
-            <div class="box-title">
-                <span class="span-icon icon-blacklist"></span>
-                <h3><?php _e( "BLACKLIST MONITOR", cp_defender()->domain ) ?></h3>
-                <a href="#pro-feature" rel="dialog"
-                   class="button button-small button-pre"
-				   tooltip="<?php esc_attr_e( "Try Defender Pro free today", cp_defender()->domain ) ?>">
-				   <?php _e( "PRO FEATURE", cp_defender()->domain ) ?></a>
-            </div>
-            <div class="box-content">
-                <div class="line">
-					<?php _e( "Automatically check if you’re on Google’s blacklist every 6 hours. If something’s
-                    wrong, we’ll let you know via email.", cp_defender()->domain ) ?>
-                </div>
-                <a href="#pro-feature" rel="dialog"
-                   class="button button-green button-small"><?php esc_html_e( "Upgrade to Pro", cp_defender()->domain ) ?></a>
-            </div>
-        </div>
-		<?php
-	}
-
 
 	public function toggleStatus( $status = null, $format = true ) {
 		$api = \CP_Defender\Behavior\Utils::instance()->getAPIKey();
@@ -80,15 +65,14 @@ class Blacklist extends Behavior {
 		if ( is_null( $status ) ) {
 			$status = $this->_pullStatus();
 		}
-		if ( $status === - 1 ) {
-			$result = \CP_Defender\Behavior\Utils::instance()->devCall( $this->end_point, array(), array(
-				'method' => 'POST'
-			), true );
-		} else {
-			$result = \CP_Defender\Behavior\Utils::instance()->devCall( $this->end_point, array(), array(
-				'method' => 'DELETE'
-			), true );
-		}
+		
+		// Cloud sync disabled - local blacklist only
+		// if ( $status === - 1 ) {
+		//	$result = \CP_Defender\Behavior\Utils::instance()->devCall( ... );
+		// } else {
+		//	$result = \CP_Defender\Behavior\Utils::instance()->devCall( ... );
+		// }
+		$result = true;
 
 		if ( $format == false ) {
 			return;
@@ -226,35 +210,11 @@ class Blacklist extends Behavior {
 	 * @return int|\WP_Error
 	 */
 	private function _pullStatus() {
-		$endpoint = $this->end_point . '?domain=' . network_site_url();
-		$result   = \CP_Defender\Behavior\Utils::instance()->devCall( $endpoint, array(), array(
-			'method'  => 'GET',
-			'timeout' => 5
-		), true );
-		if ( is_wp_error( $result ) ) {
-			//this mean error when firing to API
-			return new \WP_Error( Error_Code::API_ERROR, $result->get_error_message() );
-		}
-		$response_code = wp_remote_retrieve_response_code( $result );
-		$body          = wp_remote_retrieve_body( $result );
-		$body          = json_decode( $body, true );
-
-		if ( $response_code == 412 ) {
-			//this mean disable
-			return - 1;
-		} elseif ( isset( $body['services'] ) && is_array( $body['services'] ) ) {
-			$status = 1;
-			foreach ( $body['services'] as $service ) {
-				if ( $service['blacklisted'] == true && $service['last_checked'] != false ) {
-					$status = 0;
-					break;
-				}
-			}
-
-			return $status;
-		} else {
-			//fallbacl error
-			return new \WP_Error( Error_Code::INVALID, esc_html__( "Something wrong happened, please try again.", cp_defender()->domain ) );
-		}
+		// Cloud sync disabled - local blacklist only
+		// $endpoint = $this->end_point . '?domain=' . network_site_url();
+		// $result   = \CP_Defender\Behavior\Utils::instance()->devCall( ... );
+		
+		// Return default local status (not on blacklist)
+		return 1;
 	}
 }

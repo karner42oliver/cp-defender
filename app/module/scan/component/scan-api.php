@@ -610,13 +610,11 @@ class Scan_Api extends Component {
 			return $patterns;
 		}
 
-		$api_endpoint = "https://premium.wpmudev.org/api/defender/v1/signatures";
-		$patterns     = \CP_Defender\Behavior\Utils::instance()->devCall( $api_endpoint, array(), array(
-			'method' => 'GET'
-		) );
-		if ( is_wp_error( $patterns ) || $patterns == false ) {
-			$patterns = array();
-		}
+		// Cloud pattern sync disabled - using local patterns only
+		// $api_endpoint = "https://premium.wpmudev.org/api/defender/v1/signatures";
+		// $patterns = \CP_Defender\Behavior\Utils::instance()->devCall( $api_endpoint, ... );
+		
+		$patterns = array();
 
 		update_site_option( Scan_Api::SCAN_PATTERN, $patterns );
 

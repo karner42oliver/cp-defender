@@ -38,7 +38,7 @@
                                 </li>
                                 <li>
                                     <div>
-                                        <span class="list-label"><?php _e( "WordPress Version", cp_defender()->domain ) ?></span>
+                                        <span class="list-label"><?php echo function_exists('classicpress_version') ? __( "ClassicPress Version", cp_defender()->domain ) : __( "WordPress Version", cp_defender()->domain ) ?></span>
                                         <span class="list-detail">
                                                 <?php
                                                 echo \CP_Defender\Behavior\Utils::instance()->getWPVersion();

@@ -35,30 +35,12 @@ class Audit_API extends Component {
 	 * @return array|mixed|object|\WP_Error
 	 */
 	public static function pullLogsSummary( $filter = array() ) {
-		$data             = $filter;
-		$data['site_url'] = network_site_url();
-		$data['timezone'] = get_option( 'gmt_offset' );
-		$response         = Utils::instance()->devCall( 'http://' . self::$end_point . '/logs/summary', $data, array(
-			'method'  => 'GET',
-			'timeout' => 20,
-			//'sslverify' => false,
-			'headers' => array(
-				'apikey' => Utils::instance()->getAPIKey()
-			)
-		), true );
-
-		if ( wp_remote_retrieve_response_code( $response ) == 200 ) {
-			$body    = wp_remote_retrieve_body( $response );
-			$results = json_decode( $body, true );
-			if ( isset( $results['message'] ) ) {
-				return new \WP_Error( Error_Code::API_ERROR, $results['message'] );
-			}
-
-			return $results;
-		}
-
-		return new \WP_Error( Error_Code::API_ERROR, sprintf( __( "Whoops, Defender had trouble loading up your event log. You can try a <a href='%s'class=''>​quick refresh</a>​ of this page or check back again later.", cp_defender()->domain ),
-			Utils::instance()->getAdminPageUrl( 'wdf-logging' ) ) );
+		// Cloud sync disabled - local summary only
+		return array(
+			'total_items' => 0,
+			'attempts'    => 0,
+			'blocks'      => 0
+		);
 	}
 
 	/**
@@ -167,14 +149,8 @@ class Audit_API extends Component {
 	 * @param $data
 	 */
 	public static function curlToAPI( $data ) {
-		Utils::instance()->devCall( 'http://' . self::$end_point . '/logs/add_multiple', $data, array(
-			'method'  => 'POST',
-			//'sslverify' => false,
-			'timeout' => 3,
-			'headers' => array(
-				'apikey' => Utils::instance()->getAPIKey()
-			)
-		), true );
+		// Cloud sync disabled - logs stored locally only
+		// Utils::instance()->devCall( 'http://' . self::$end_point . '/logs/add_multiple', ... );
 	}
 
 	/**

@@ -45,14 +45,9 @@ class Vuln_Scan extends Behavior {
 			}
 		}
 
-		$response = $this->devCall( $this->endPoint, array(
-			'themes'    => json_encode( $themes ),
-			'plugins'   => json_encode( $plugins ),
-			'wordpress' => $wp_version
-		), array(
-			'method'  => 'POST',
-			'timeout' => 15
-		) );
+		// Cloud vulnerability scan disabled - local scan only
+		// $response = $this->devCall( $this->endPoint, array( ... ), array( ... ) );
+		$response = false;
 
 		if ( is_array( $response ) ) {
 			$this->processWordPressVuln( $response['wordpress'] );

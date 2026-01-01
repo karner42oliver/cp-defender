@@ -92,6 +92,11 @@ class Utils extends Behavior {
 	public function getWPVersion() {
 		global $wp_version;
 
+		// Check if running on ClassicPress
+		if ( function_exists( 'classicpress_version' ) ) {
+			return 'ClassicPress ' . classicpress_version();
+		}
+
 		return $wp_version;
 	}
 
@@ -857,11 +862,10 @@ class Utils extends Behavior {
 	}
 
 	public function _submitStatsToDev() {
-		$data      = $this->generateStats();
-		$end_point = "https://premium.wpmudev.org/api/defender/v1/scan-results";
-		$res       = $this->devCall( $end_point, $data, array(
-			'method' => 'POST'
-		) );
+		// Cloud stats submission disabled - no external analytics
+		// $data      = $this->generateStats();
+		// $end_point = "https://premium.wpmudev.org/api/defender/v1/scan-results";
+		// $res       = $this->devCall( $end_point, $data, array( 'method' => 'POST' ) );
 	}
 
 	/**
