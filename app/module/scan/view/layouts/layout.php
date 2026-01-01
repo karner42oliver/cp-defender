@@ -53,15 +53,7 @@
                                         <div>
                                             <span class="list-label"><?php _e( "Plugins & Themes", cp_defender()->domain ) ?></span>
                                             <span class="list-detail def-issues-top-right-pt">
-                                                <?php if ( \CP_Defender\Behavior\Utils::instance()->getAPIKey() ): ?>
-	                                                <?php echo $model->getCount( 'vuln' ) == 0 ? ' <i class="def-icon icon-tick"></i>' : '<span class="def-tag tag-error">' . $model->getCount( 'vuln' ) . '</span>' ?>
-                                                <?php else: ?>
-                                                    <a href="<?php echo \CP_Defender\Behavior\Utils::instance()->campaignURL('defender_filescanning_summary_pro_tag') ?>" target="_blank"
-                                                       class="button button-pre button-small"
-                                                       tooltip="<?php esc_attr_e( "Try Defender Pro free today", cp_defender()->domain ) ?>">
-                                                        <?php _e( "Pro Feature", cp_defender()->domain ) ?>
-                                                    </a>
-                                                <?php endif; ?>
+                                                <?php echo $model->getCount( 'vuln' ) == 0 ? ' <i class="def-icon icon-tick"></i>' : '<span class="def-tag tag-error">' . $model->getCount( 'vuln' ) . '</span>' ?>
                                             </span>
                                         </div>
                                     </li>
@@ -69,15 +61,7 @@
                                         <div>
                                             <span class="list-label"><?php _e( "Suspicious Code", cp_defender()->domain ) ?></span>
                                             <span class="list-detail def-issues-top-right-sc">
-                                                <?php if ( \CP_Defender\Behavior\Utils::instance()->getAPIKey() ): ?>
-	                                                <?php echo $model->getCount( 'content' ) == 0 ? ' <i class="def-icon icon-tick"></i>' : '<span class="def-tag tag-error">' . $model->getCount( 'content' ) . '</span>' ?>
-                                                <?php else: ?>
-                                                    <a href="<?php echo \CP_Defender\Behavior\Utils::instance()->campaignURL('defender_filescanning_summary_pro_tag') ?>" target="_blank"
-                                                       class="button button-pre button-small"
-                                                       tooltip="<?php esc_attr_e( "Try Defender Pro free today", cp_defender()->domain ) ?>" >
-                                                        <?php _e( "Pro Feature", cp_defender()->domain ) ?>
-                                                    </a>
-                                                <?php endif; ?>
+                                                <?php echo $model->getCount( 'content' ) == 0 ? ' <i class="def-icon icon-tick"></i>' : '<span class="def-tag tag-error">' . $model->getCount( 'content' ) . '</span>' ?>
                                             </span>
                                         </div>
                                     </li>

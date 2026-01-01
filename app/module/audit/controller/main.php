@@ -629,7 +629,7 @@ class Main extends \CP_Defender\Controller {
 	public function _renderTable( $data ) {
 		return $this->renderPartial( 'table', array(
 			'data'       => $data,
-			'pagination' => is_wp_error( $data ) ? '' : $this->pagination( $data['total_items'], $data['total_pages'] )
+			'pagination' => is_wp_error( $data ) ? '' : $this->pagination( $data['total_items'] ?? 0, $data['total_pages'] ?? 1 )
 		), false );
 	}
 

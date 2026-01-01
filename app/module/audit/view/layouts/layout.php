@@ -37,11 +37,11 @@
                                                     <?php
                                                     if ( $settings->frequency == 1 ) {
 	                                                    printf( __( "at %s", cp_defender()->domain ),
-		                                                    strftime( '%I:%M %p', strtotime( $settings->time ) ) );
+		                                                    date( 'h:i A', strtotime( $settings->time ) ) );
                                                     } else {
 	                                                    printf( __( "%s at %s", cp_defender()->domain ),
 		                                                    ucfirst( $settings->day ),
-		                                                    strftime( '%I:%M %p', strtotime( $settings->time ) ) );
+		                                                    date( 'h:i A', strtotime( $settings->time ) ) );
                                                     } ?>
                                                 </p>
 	                                            <?php

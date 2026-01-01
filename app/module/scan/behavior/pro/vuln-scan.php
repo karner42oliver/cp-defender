@@ -45,17 +45,119 @@ class Vuln_Scan extends Behavior {
 			}
 		}
 
-		// Cloud vulnerability scan disabled - local scan only
-		// $response = $this->devCall( $this->endPoint, array( ... ), array( ... ) );
-		$response = false;
+		// Check if WPScan API token is configured
+		$settings = \CP_Defender\Module\Scan\Model\Settings::instance();
+		$api_token = trim( $settings->wpscan_api_token );
+		
+		if ( empty( $api_token ) ) {
+			// No API token configured - skip vulnerability scan
+			return true;
+		}
+
+		// Use WPScan API for vulnerability checking
+		$response = $this->checkWPScanAPI( $wp_version, $plugins, $themes, $api_token );
 
 		if ( is_array( $response ) ) {
-			$this->processWordPressVuln( $response['wordpress'] );
-			$this->processPluginsVuln( $response['plugins'] );
-			$this->processThemesVuln( $response['themes'] );
+			if ( isset( $response['wordpress'] ) ) {
+				$this->processWordPressVuln( $response['wordpress'] );
+			}
+			if ( isset( $response['plugins'] ) ) {
+				$this->processPluginsVuln( $response['plugins'] );
+			}
+			if ( isset( $response['themes'] ) ) {
+				$this->processThemesVuln( $response['themes'] );
+			}
 		}
 
 		return true;
+	}
+
+	/**
+	 * Check vulnerabilities via WPScan API
+	 */
+	private function checkWPScanAPI( $wp_version, $plugins, $themes, $api_token ) {
+		$result = array(
+			'wordpress' => array(),
+			'plugins' => array(),
+			'themes' => array()
+		);
+
+		// Check WordPress core
+		$wp_response = wp_remote_get( 'https://wpscan.com/api/v3/wordpresses/' . $wp_version, array(
+			'timeout' => 15,
+			'headers' => array(
+				'Authorization' => 'Token token=' . $api_token
+			)
+		) );
+
+		if ( ! is_wp_error( $wp_response ) && 200 == wp_remote_retrieve_response_code( $wp_response ) ) {
+			$wp_data = json_decode( wp_remote_retrieve_body( $wp_response ), true );
+			if ( isset( $wp_data[ $wp_version ]['vulnerabilities'] ) ) {
+				$result['wordpress'] = $wp_data[ $wp_version ]['vulnerabilities'];
+			}
+		}
+
+		// Check plugins
+		foreach ( $plugins as $slug => $version ) {
+			$plugin_response = wp_remote_get( 'https://wpscan.com/api/v3/plugins/' . $slug, array(
+				'timeout' => 15,
+				'headers' => array(
+					'Authorization' => 'Token token=' . $api_token
+				)
+			) );
+
+			if ( ! is_wp_error( $plugin_response ) && 200 == wp_remote_retrieve_response_code( $plugin_response ) ) {
+				$plugin_data = json_decode( wp_remote_retrieve_body( $plugin_response ), true );
+				if ( isset( $plugin_data[ $slug ]['vulnerabilities'] ) ) {
+					foreach ( $plugin_data[ $slug ]['vulnerabilities'] as $vuln ) {
+						// Check if current version is vulnerable
+						if ( $this->isVersionVulnerable( $version, $vuln ) ) {
+							if ( ! isset( $result['plugins'][ $slug ] ) ) {
+								$result['plugins'][ $slug ] = array();
+							}
+							$result['plugins'][ $slug ][] = $vuln;
+						}
+					}
+				}
+			}
+		}
+
+		// Check themes
+		foreach ( $themes as $slug => $version ) {
+			$theme_response = wp_remote_get( 'https://wpscan.com/api/v3/themes/' . $slug, array(
+				'timeout' => 15,
+				'headers' => array(
+					'Authorization' => 'Token token=' . $api_token
+				)
+			) );
+
+			if ( ! is_wp_error( $theme_response ) && 200 == wp_remote_retrieve_response_code( $theme_response ) ) {
+				$theme_data = json_decode( wp_remote_retrieve_body( $theme_response ), true );
+				if ( isset( $theme_data[ $slug ]['vulnerabilities'] ) ) {
+					foreach ( $theme_data[ $slug ]['vulnerabilities'] as $vuln ) {
+						if ( $this->isVersionVulnerable( $version, $vuln ) ) {
+							if ( ! isset( $result['themes'][ $slug ] ) ) {
+								$result['themes'][ $slug ] = array();
+							}
+							$result['themes'][ $slug ][] = $vuln;
+						}
+					}
+				}
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Check if version is vulnerable based on WPScan data
+	 */
+	private function isVersionVulnerable( $version, $vuln ) {
+		// WPScan provides fixed_in version
+		if ( isset( $vuln['fixed_in'] ) && ! empty( $vuln['fixed_in'] ) ) {
+			return version_compare( $version, $vuln['fixed_in'], '<' );
+		}
+		return true; // If no fix info, assume vulnerable
 	}
 
 

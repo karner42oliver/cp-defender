@@ -26,12 +26,15 @@
                     <span class="toggle" aria-hidden="true" role="presentation">
                         <input type="hidden" name="scan_vuln" value="0"/>
                         <input role="presentation" type="checkbox" class="toggle-checkbox" name="scan_vuln" value="1"
-                               id="scan-vuln" <?php checked( true, $setting->scan_vuln ) ?>/>
+                               id="scan-vuln" <?php checked( ! empty( $setting->wpscan_api_token ) && $setting->scan_vuln ) ?> <?php disabled( empty( $setting->wpscan_api_token ) ) ?>/>
                         <label aria-hidden="true" class="toggle-label" for="scan-vuln"></label>
                     </span>
                     <label for="scan-vuln"><?php _e( "Plugins & Themes", cp_defender()->domain ) ?></label>
                     <span class="sub inpos">
                         <?php _e( "Defender looks for publicly reported vulnerabilities in your installed plugins and themes.", cp_defender()->domain ) ?>
+                        <?php if ( empty( $setting->wpscan_api_token ) ): ?>
+                            <br/><strong style="color: #FF6D6D;"><?php _e( "Requires WPScan API token (see below)", cp_defender()->domain ) ?></strong>
+                        <?php endif; ?>
                     </span>
                     <div class="clear mline"></div>
                     <span class="toggle" aria-hidden="true" role="presentation">
@@ -44,6 +47,23 @@
                     <span class="sub inpos">
                         <?php _e( "Defender looks inside all of your files for suspicious and potentially harmful code.", cp_defender()->domain ) ?>
                     </span>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column is-one-third">
+                    <strong><?php _e( "WPScan API Token", cp_defender()->domain ) ?></strong>
+                    <span class="sub">
+                        <?php _e( "Enter your WPScan API token to enable vulnerability scanning for plugins and themes. Get a free token (25 requests/day) at", cp_defender()->domain ) ?>
+                        <a href="https://wpscan.com/api" target="_blank">wpscan.com/api</a>
+                    </span>
+                </div>
+                <div class="column">
+                    <input type="text" name="wpscan_api_token" value="<?php echo esc_attr( $setting->wpscan_api_token ) ?>" placeholder="<?php esc_attr_e( "Enter API token", cp_defender()->domain ) ?>" style="width: 100%; max-width: 400px;"/>
+                    <?php if ( !empty( $setting->wpscan_api_token ) ): ?>
+                        <span class="sub" style="color: #1ABC9C;"><i class="def-icon icon-tick"></i> <?php _e( "API token configured", cp_defender()->domain ) ?></span>
+                    <?php else: ?>
+                        <span class="sub" style="color: #FF6D6D;"><?php _e( "No API token - vulnerability scanning disabled", cp_defender()->domain ) ?></span>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="columns">

@@ -605,16 +605,16 @@ class Scan_Api extends Component {
 		}
 
 		$patterns = get_site_option( Scan_Api::SCAN_PATTERN, null );
-		if ( is_array( $patterns ) ) {
+		if ( is_array( $patterns ) && !empty( $patterns ) ) {
 			//return pattern if that exists, no matter the content
 			return $patterns;
 		}
 
-		// Cloud pattern sync disabled - using local patterns only
-		// $api_endpoint = "https://premium.wpmudev.org/api/defender/v1/signatures";
-		// $patterns = \CP_Defender\Behavior\Utils::instance()->devCall( $api_endpoint, ... );
-		
-		$patterns = array();
+		// Define local malware detection patterns
+		$patterns = array(
+			'suspicious_function_pattern' => '/^(eval|base64_decode|gzinflate|gzuncompress|str_rot13|exec|system|shell_exec|passthru|proc_open|popen|curl_exec|curl_multi_exec|parse_ini_file|show_source|assert|create_function|file_put_contents|fwrite|move_uploaded_file|preg_replace|call_user_func|call_user_func_array|ob_start)$/i',
+			'base64_encode_pattern' => '/[a-zA-Z0-9+\/]{200,}={0,2}/',
+		);
 
 		update_site_option( Scan_Api::SCAN_PATTERN, $patterns );
 

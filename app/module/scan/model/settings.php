@@ -34,6 +34,12 @@ class Settings extends \Hammer\WP\Settings {
 	public $scan_content = true;
 
 	/**
+	 * WPScan API Token for vulnerability scanning
+	 * @var string
+	 */
+	public $wpscan_api_token = '';
+
+	/**
 	 * Receipts to sending notification
 	 * @var array
 	 */
@@ -137,7 +143,8 @@ Official PSOURCE Superhero', cp_defender()->domain );
 			$scans[] = 'core';
 		}
 
-		if ( $this->scan_vuln ) {
+		// Only include vuln scan if enabled AND API token is configured
+		if ( $this->scan_vuln && ! empty( $this->wpscan_api_token ) ) {
 			$scans[] = 'vuln';
 		}
 

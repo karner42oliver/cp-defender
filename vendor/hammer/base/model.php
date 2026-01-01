@@ -61,7 +61,7 @@ class Model extends Component {
 					$validators[ $attribute ] = null;
 				}
 
-				$crules                   = explode( '|', $validators[ $attribute ] );
+				$crules                   = explode( '|', $validators[ $attribute ] ?? '' );
 				$crules[]                 = $rule;
 				$crules                   = array_unique( $crules );
 				$crules                   = array_filter( $crules );

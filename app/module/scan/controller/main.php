@@ -288,6 +288,12 @@ class Main extends \CP_Defender\Controller {
 			}
 		}
 		$settings->import( $data );
+		
+		// Automatically disable vuln scan if no API token
+		if ( empty( $settings->wpscan_api_token ) ) {
+			$settings->scan_vuln = false;
+		}
+		
 		$settings->email_all_ok    = stripslashes( $settings->email_all_ok );
 		$settings->email_has_issue = stripslashes( $settings->email_has_issue );
 		$settings->save();
@@ -673,7 +679,7 @@ return;
 			$this->viewScanning();
 		} else {
 			$setting = Scan\Model\Settings::instance();
-			$view    = 'setting-free';
+			$view    = 'setting';
 			$this->render( $view, array(
 				'setting'      => $setting,
 				'model'        => $model,
@@ -694,7 +700,7 @@ return;
 			$this->viewScanning();
 		} else {
 			$this->email_search->add_script();
-			$view = 'automation-free';
+			$view = 'automation';
 			$this->render( $view, array(
 				'setting'      => $setting,
 				'model'        => $model,
