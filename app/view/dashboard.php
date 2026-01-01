@@ -78,24 +78,6 @@
 					<?php $controller->renderBlacklistWidget() ?>
 					<?php $controller->renderAuditWidget() ?>
 					<?php $controller->renderATWidget() ?>
-					<?php if ( cp_defender()->isFree ): ?>
-                        <div class="dev-box dev-team">
-                            <div class="box-title">
-                                <h3><?php _e( "TRY PRO FEATURES FOR FREE!", cp_defender()->domain ) ?></h3>
-                            </div>
-                            <div class="box-content tc">
-                                <div class="line">
-									<?php _e( "Upgrade to Defender Pro to unlock Advanced File Scanning, Blacklist Monitoring, Audit Logging and automated reporting for Audit Logging, IP Lockouts and File Scans.", cp_defender()->domain ) ?>
-                                </div>
-                                <div class="line">
-									<?php _e( "Get all this as part of a PSOURCE Membership, and the best part is you can try everything absolutely free.", cp_defender()->domain ) ?>
-                                </div>
-                                <a href="#pro-feature" rel="dialog"
-                                   class="button button-green">
-		                            <?php _e( "FIND OUT MORE", cp_defender()->domain ) ?></a>
-                            </div>
-                        </div>
-					<?php endif; ?>
                 </div>
                 <div class="col-half">
 					<?php $controller->renderScanWidget() ?>
@@ -107,12 +89,12 @@
     </div>
 </div>
 <?php
-if ( $controller->isShowActivator() ) {
+/*if ( $controller->isShowActivator() ) {
 	$view = cp_defender()->isFree ? 'activator-free' : 'activator';
 	$controller->renderPartial( $view );
 } ?>
 <?php
 if ( cp_defender()->isFree ) {
 	$controller->renderPartial( 'pro-feature' );
-}
+}*/
 ?>

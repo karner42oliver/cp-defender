@@ -71,6 +71,57 @@ class Main extends \CP_Defender\Controller {
 		$this->add_action( 'auditReportCron', 'auditReportCron' );
 	}
 
+	/**
+	 * Add submit admin page
+	 */
+	public function adminMenu() {
+		$cap = is_multisite() ? 'manage_network_options' : 'manage_options';
+		add_submenu_page( 'cp-defender', esc_html__( "Audit Logging", cp_defender()->domain ), esc_html__( "Audit Logging", cp_defender()->domain ), $cap, $this->slug, array(
+			&$this,
+			'actionIndex'
+		) );
+	}
+
+	public function actionIndex() {
+		$from = HTTP_Helper::retrieve_get( 'date_from' );
+		$to   = HTTP_Helper::retrieve_get( 'date_to' );
+
+		if ( $from ) {
+			$from = strtotime( $from );
+		} else {
+			$from = strtotime( '-30 days' );
+		}
+
+		if ( $to ) {
+			$to = strtotime( $to );
+		} else {
+			$to = time();
+		}
+
+		$this->renderPartial( 'main', array(
+			'from'           => date( 'm/d/Y', $from ),
+			'to'             => date( 'm/d/Y', $to ),
+			'email_search'   => $this->email_search,
+			'settings'       => Settings::instance()
+		) );
+	}
+
+	public function scripts() {
+		if ( $this->isInPage() ) {
+			\WDEV_Plugin_Ui::load( cp_defender()->getPluginUrl() . 'shared-ui/' );
+			wp_enqueue_script( 'defender' );
+			wp_enqueue_style( 'defender' );
+			wp_enqueue_script( 'audit', cp_defender()->getPluginUrl() . 'app/module/audit/js/script.js', array(
+				'jquery-effects-core'
+			) );
+			wp_enqueue_script( 'audit-momentjs', cp_defender()->getPluginUrl() . 'app/module/audit/js/moment/moment.min.js' );
+			wp_enqueue_style( 'audit-daterangepicker', cp_defender()->getPluginUrl() . 'app/module/audit/js/daterangepicker/daterangepicker.css' );
+			wp_enqueue_script( 'audit-daterangepicker', cp_defender()->getPluginUrl() . 'app/module/audit/js/daterangepicker/daterangepicker.js' );
+		} else {
+			wp_enqueue_script( 'audit', cp_defender()->getPluginUrl() . 'app/module/audit/js/script.js' );
+		}
+	}
+
 	public function exportAsCvs() {
 		if ( ! $this->checkPermission() ) {
 			return;

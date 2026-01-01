@@ -57,7 +57,7 @@
 						<ul class="inner-nav is-hidden-mobile">
 							<li>
 								<a class="<?php echo \Hammer\Helper\HTTP_Helper::retrieve_get( 'view', false ) == false ? 'active' : null ?>"
-								href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-hardener' ) ?>">
+								href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-hardener' ) ?>">
 									<?php _e( "Issues", cp_defender()->domain ) ?>
 									<?php
 										$tooltip = '';
@@ -70,14 +70,14 @@
 							</li>
 							<li>
 								<a class="<?php echo $controller->isView( 'resolved' ) ? 'active' : null ?>"
-								href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-hardener', array( 'view' => 'resolved' ) ) ?>">
+								href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-hardener', array( 'view' => 'resolved' ) ) ?>">
 									<?php _e( "Resolved", cp_defender()->domain ) ?>
 									<span class="count-resolved <?php echo $controller->getCount( 'fixed' ) == 0 ? 'wd-hide' : null ?>"><?php echo $controller->getCount( 'fixed' ) ?></span>
 								</a>
 							</li>
 							<li>
 								<a class="<?php echo $controller->isView( 'ignored' ) ? 'active' : null ?>"
-								href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-hardener', array( 'view' => 'ignored' ) ) ?>">
+								href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-hardener', array( 'view' => 'ignored' ) ) ?>">
 									<?php _e( "Ignored", cp_defender()->domain ) ?>
 									<span class="count-ignored <?php echo $controller->getCount( 'ignore' ) == 0 ? 'wd-hide' : null ?>"><?php echo $controller->getCount( 'ignore' ) ?></span>
 								</a>
@@ -95,11 +95,11 @@
 						<nav role="navigation" aria-label="Filters">
 							<select class="mobile-nav">
 								<option <?php selected( '', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view' ) ) ?>
-										value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-hardener' ) ?>"><?php _e( "Issues", cp_defender()->domain ) ?></option>
-								<option <?php selected( 'resolved', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view' ) ) ?>
-										value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-hardener', array( 'view' => 'resolved' ) ) ?>"><?php _e( "Resolved", cp_defender()->domain ) ?></option>
-								<option <?php selected( 'ignored', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view' ) ) ?>
-										value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-hardener', array( 'view' => 'ignored' ) ) ?>"><?php _e( "Ignored", cp_defender()->domain ) ?></option>
+								value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-hardener' ) ?>"><?php _e( "Issues", cp_defender()->domain ) ?></option>
+						<option <?php selected( 'resolved', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view' ) ) ?>
+								value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-hardener', array( 'view' => 'resolved' ) ) ?>"><?php _e( "Resolved", cp_defender()->domain ) ?></option>
+						<option <?php selected( 'ignored', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view' ) ) ?>
+								value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-hardener', array( 'view' => 'ignored' ) ) ?>"><?php _e( "Ignored", cp_defender()->domain ) ?></option>
 							</select>
 						</nav>
                     </div>

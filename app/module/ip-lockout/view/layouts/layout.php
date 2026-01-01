@@ -51,49 +51,49 @@
                         <ul class="inner-nav is-hidden-mobile">
                             <li>
                                 <a class="<?php echo \Hammer\Helper\HTTP_Helper::retrieve_get( 'view', false ) == false ? 'active' : null ?>"
-                                   href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout' ) ?>"><?php _e( "Login Protection", cp_defender()->domain ) ?></a>
+                                   href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout' ) ?>"><?php _e( "Login Protection", cp_defender()->domain ) ?></a>
                             </li>
                             <li>
                                 <a class="<?php echo $controller->isView( '404' ) ? 'active' : null ?>"
-                                   href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => '404' ) ) ?>"><?php _e( "404 Detection", cp_defender()->domain ) ?></a>
+                                   href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => '404' ) ) ?>"><?php _e( "404 Detection", cp_defender()->domain ) ?></a>
                             </li>
                             <li>
                                 <a class="<?php echo $controller->isView( 'blacklist' ) ? 'active' : null ?>"
-                                   href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'blacklist' ) ) ?>"><?php _e( "IP Banning", cp_defender()->domain ) ?></a>
+                                   href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'blacklist' ) ) ?>"><?php _e( "IP Banning", cp_defender()->domain ) ?></a>
                             </li>
                             <li>
                                 <a class="<?php echo $controller->isView( 'logs' ) ? 'active' : null ?>"
-                                   href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'logs' ) ) ?>"><?php _e( "Logs", cp_defender()->domain ) ?></a>
+                                   href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'logs' ) ) ?>"><?php _e( "Logs", cp_defender()->domain ) ?></a>
                             </li>
                             <li>
                                 <a class="<?php echo $controller->isView( 'notification' ) ? 'active' : null ?>"
-                                   href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'notification' ) ) ?>"><?php _e( "Notifications", cp_defender()->domain ) ?></a>
+                                   href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'notification' ) ) ?>"><?php _e( "Notifications", cp_defender()->domain ) ?></a>
                             </li>
                             <li>
                                 <a class="<?php echo $controller->isView( 'settings' ) ? 'active' : null ?>"
-                                   href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'settings' ) ) ?>"><?php _e( "Settings", cp_defender()->domain ) ?></a>
+                                   href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'settings' ) ) ?>"><?php _e( "Settings", cp_defender()->domain ) ?></a>
                             </li>
                             <li>
                                 <a class="<?php echo $controller->isView( 'reporting' ) ? 'active' : null ?>"
-                                   href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'reporting' ) ) ?>"><?php _e( "Reporting", cp_defender()->domain ) ?></a>
+                                   href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'reporting' ) ) ?>"><?php _e( "Reporting", cp_defender()->domain ) ?></a>
                             </li>
                         </ul>
                         <div class="is-hidden-tablet mline">
                             <select class="mobile-nav">
                                 <option <?php selected( null, \Hammer\Helper\HTTP_Helper::retrieve_get( 'view', null ) ) ?>
-                                        value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout' ) ?>"><?php _e( "Login Protection", cp_defender()->domain ) ?></option>
+                                        value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout' ) ?>"><?php _e( "Login Protection", cp_defender()->domain ) ?></option>
                                 <option <?php selected( '404', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view', null ) ) ?>
-                                        value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => '404' ) ) ?>"><?php _e( "404 Detection", cp_defender()->domain ) ?></option>
+                                        value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => '404' ) ) ?>"><?php _e( "404 Detection", cp_defender()->domain ) ?></option>
                                 <option <?php selected( 'blacklist', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view', null ) ) ?>
-                                        value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'blacklist' ) ) ?>"><?php _e( "IP Blacklist", cp_defender()->domain ) ?></option>
+                                        value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'blacklist' ) ) ?>"><?php _e( "IP Blacklist", cp_defender()->domain ) ?></option>
                                 <option <?php selected( 'logs', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view', null ) ) ?>
-                                        value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'logs' ) ) ?>"><?php _e( "Logs", cp_defender()->domain ) ?></option>
+                                        value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'logs' ) ) ?>"><?php _e( "Logs", cp_defender()->domain ) ?></option>
                                 <option <?php selected( 'notification', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view', null ) ) ?>
-                                        value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'notification' ) ) ?>"><?php _e( "Notifications", cp_defender()->domain ) ?></option>
+                                        value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'notification' ) ) ?>"><?php _e( "Notifications", cp_defender()->domain ) ?></option>
                                 <option <?php selected( 'settings', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view', null ) ) ?>
-                                        value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'settings' ) ) ?>"><?php _e( "Settings", cp_defender()->domain ) ?></option>
+                                        value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'settings' ) ) ?>"><?php _e( "Settings", cp_defender()->domain ) ?></option>
                                 <option <?php selected( 'reporting', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view', null ) ) ?>
-                                        value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'reporting' ) ) ?>"><?php _e( "Reporting", cp_defender()->domain ) ?></option>
+                                        value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'reporting' ) ) ?>"><?php _e( "Reporting", cp_defender()->domain ) ?></option>
                             </select>
                         </div>
                     </div>
