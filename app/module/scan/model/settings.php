@@ -94,10 +94,6 @@ class Settings extends \Hammer\WP\Settings {
 			'utils' => '\CP_Defender\Behavior\Utils'
 		);
 
-		if ( cp_defender()->isFree == false ) {
-			$behaviors['pro'] = '\CP_Defender\Module\Scan\Behavior\Pro\Model';
-		}
-
 		return $behaviors;
 	}
 
@@ -141,11 +137,11 @@ Official PSOURCE Superhero', cp_defender()->domain );
 			$scans[] = 'core';
 		}
 
-		if ( $this->scan_vuln && cp_defender()->isFree != true ) {
+		if ( $this->scan_vuln ) {
 			$scans[] = 'vuln';
 		}
 
-		if ( $this->scan_content && cp_defender()->isFree != true ) {
+		if ( $this->scan_content ) {
 			$scans[] = 'content';
 		}
 

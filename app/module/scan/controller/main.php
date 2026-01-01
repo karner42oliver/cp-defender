@@ -24,9 +24,6 @@ class Main extends \CP_Defender\Controller {
 	 */
 	public function behaviors() {
 		$behaviors = array( 'utils' => '\CP_Defender\Behavior\Utils' );
-		if ( cp_defender()->isFree == false ) {
-			$behaviors['pro'] = '\CP_Defender\Module\Scan\Behavior\Pro\Reporting';
-		}
 
 		return $behaviors;
 	}
@@ -74,10 +71,6 @@ class Main extends \CP_Defender\Controller {
 	 * @return bool|void
 	 */
 	public function scanReportCron() {
-		if ( cp_defender()->isFree ) {
-			return;
-		}
-
 		$settings       = Settings::instance();
 		$lastReportSent = $settings->lastReportSent;
 		if ( $lastReportSent == null ) {
@@ -122,7 +115,7 @@ class Main extends \CP_Defender\Controller {
 			$activeScan->delete();
 			Scan_Api::flushCache();
 			wp_send_json_success( array(
-				'url' => Utils::instance()->getAdminPageUrl( 'wdf-scan' )
+				'url' => \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan' )
 			) );
 		}
 
@@ -469,12 +462,12 @@ class Main extends \CP_Defender\Controller {
 			'statusText' => is_object( $model ) ? $model->statusText : null
 		);
 		if ( $ret == true ) {
-			$data['url'] = Utils::instance()->getAdminPageUrl( 'wdf-scan' );
+			$data['url'] = \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan' );
 			$referrer    = HTTP_Helper::retrieve_post( '_wp_http_referer' );
 			parse_str( parse_url( $referrer, PHP_URL_QUERY ), $urlComp );
 			if ( isset( $urlComp['page'] ) && $urlComp['page'] == 'cp-defender' ) {
 				//from dashboard
-				$data['url'] = Utils::instance()->getAdminPageUrl( 'cp-defender' );
+				$data['url'] = \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'cp-defender' );
 			}
 			$this->sendEmailReport( true );
 			$this->submitStatsToDev();
@@ -502,7 +495,7 @@ class Main extends \CP_Defender\Controller {
 		$ret = Scan_Api::createScan();
 		if ( ! is_wp_error( $ret ) ) {
 			wp_send_json_success( array(
-					'url' => Utils::instance()->getAdminPageUrl( 'wdf-scan' )
+					'url' => \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan' )
 				)
 			);
 		}
@@ -680,7 +673,7 @@ return;
 			$this->viewScanning();
 		} else {
 			$setting = Scan\Model\Settings::instance();
-			$view    = cp_defender()->isFree ? 'setting-free' : 'setting';
+			$view    = 'setting-free';
 			$this->render( $view, array(
 				'setting'      => $setting,
 				'model'        => $model,
@@ -701,7 +694,7 @@ return;
 			$this->viewScanning();
 		} else {
 			$this->email_search->add_script();
-			$view = cp_defender()->isFree ? 'automation-free' : 'automation';
+			$view = 'automation-free';
 			$this->render( $view, array(
 				'setting'      => $setting,
 				'model'        => $model,
@@ -757,7 +750,7 @@ return;
 			$params  = array(
 				'USER_NAME'      => $this->getDisplayName( $user_id ),
 				'ISSUES_COUNT'   => $count,
-				'SCAN_PAGE_LINK' => Utils::instance()->getAdminPageUrl( 'wdf-scan' ),
+				'SCAN_PAGE_LINK' => \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan' ),
 				'ISSUES_LIST'    => $this->issues_list_html( $model ),
 				'SITE_URL'       => network_site_url(),
 			);
@@ -844,7 +837,7 @@ return;
                 <td colspan="2"
                     style="-moz-hyphens: auto; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #555555; font-family: Helvetica, Arial, sans-serif; font-size: 15px; font-weight: normal; hyphens: auto; line-height: 26px; margin: 0; padding: 10px 0 0; text-align: left; vertical-align: top; word-wrap: break-word;">
                     <p style="Margin: 0; Margin-bottom: 0; color: #555555; font-family: Helvetica, Arial, sans-serif; font-size: 15px; font-weight: normal; line-height: 26px; margin: 0; margin-bottom: 0; padding: 0 0 24px; text-align: left;">
-                        <a class="plugin-brand" href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-scan' ) ?>"
+                        <a class="plugin-brand" href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan' ) ?>"
                            style="Margin: 0; color: #ff5c28; display: inline-block; font: inherit; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 0; padding: 0; text-align: left; text-decoration: none;"><?php esc_html_e( "Let’s get your site patched up.", cp_defender()->domain ) ?>
                             <img class="icon-arrow-right"
                                  src="<?php echo cp_defender()->getPluginUrl() ?>assets/email-images/icon-arrow-right-defender.png"
@@ -877,19 +870,17 @@ return;
 		$total_ignored = $ignored_wp;
 
 		$premium_counts = array();
-		if ( cp_defender()->isFree == false ) {
-			$issues_vuln     = $this->countStatus( $parent_id, Result_Item::STATUS_ISSUE, 'vuln' );
-			$issues_content  = $this->countStatus( $parent_id, Result_Item::STATUS_ISSUE, 'content' );
-			$ignored_vuln    = $this->countStatus( $parent_id, Result_Item::STATUS_IGNORED, 'vuln' );
-			$ignored_content = $this->countStatus( $parent_id, Result_Item::STATUS_IGNORED, 'content' );
+		$issues_vuln     = $this->countStatus( $parent_id, Result_Item::STATUS_ISSUE, 'vuln' );
+		$issues_content  = $this->countStatus( $parent_id, Result_Item::STATUS_ISSUE, 'content' );
+		$ignored_vuln    = $this->countStatus( $parent_id, Result_Item::STATUS_IGNORED, 'vuln' );
+		$ignored_content = $this->countStatus( $parent_id, Result_Item::STATUS_IGNORED, 'content' );
 
-			$total_issues  += $issues_vuln;
-			$total_issues  += $issues_content;
-			$total_ignored += $ignored_vuln;
-			$total_ignored += $ignored_content;
+		$total_issues  += $issues_vuln;
+		$total_issues  += $issues_content;
+		$total_ignored += $ignored_vuln;
+		$total_ignored += $ignored_content;
 
-			$premium_counts = array( 'vuln_issues' => $issues_vuln, 'content_issues' => $issues_content );
-		}
+		$premium_counts = array( 'vuln_issues' => $issues_vuln, 'content_issues' => $issues_content );
 
 		$counts = array( 'issues' => $total_issues, 'issues_wp' => $issues_wp, 'ignored' => $total_ignored );
 

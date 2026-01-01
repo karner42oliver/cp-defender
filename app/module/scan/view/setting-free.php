@@ -4,7 +4,7 @@
     </div>
     <div class="box-content">
         <form method="post" class="scan-frm scan-settings">
-            <div class="columns <?php echo cp_defender()->isFree ? 'has-presale' : null ?>">
+            <div class="columns">
                 <div class="column is-one-third">
                     <strong><?php _e( "Scan Types", cp_defender()->domain ) ?></strong>
                     <span class="sub">

@@ -9,7 +9,7 @@
                     <ul class="inner-nav is-hidden-mobile">
                         <li class="issues-nav">
                             <a class="<?php echo \Hammer\Helper\HTTP_Helper::retrieve_get( 'view', false ) == false ? 'active' : null ?>"
-                               href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-advanced-tools' ) ?>">
+                               href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-advanced-tools' ) ?>">
 						        <?php _e( "Two-Factor Authentication", cp_defender()->domain ) ?>
                             </a>
                         </li>
@@ -17,7 +17,7 @@
                     <div class="is-hidden-tablet mline">
                         <select class="mobile-nav">
                             <option <?php selected( '', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view' ) ) ?>
-                                    value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-advanced-tools' ) ?>"><?php _e( "Two Factor Authentication", cp_defender()->domain ) ?></option>
+                                    value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-advanced-tools' ) ?>"><?php _e( "Two Factor Authentication", cp_defender()->domain ) ?></option>
                         </select>
                     </div>
                 </div>

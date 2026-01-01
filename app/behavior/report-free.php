@@ -23,7 +23,7 @@ class Report_Free extends Behavior {
                 </div>
                 <div class="row is_multiline">
                     <div class="col-half">
-                        <a href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'reporting' ) ) ?>">
+                        <a href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'reporting' ) ) ?>">
                             <div class="report-status with-corner">
                                 <img src="<?php echo cp_defender()->getPluginUrl() ?>assets/img/scanning-pre.svg">
                                 <strong><?php _e( "FILE SCANNING", cp_defender()->domain ) ?></strong>
@@ -34,7 +34,7 @@ class Report_Free extends Behavior {
                         </a>
                     </div>
                     <div class="col-half">
-                        <a href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-logging', array( 'view' => 'report' ) ) ?>">
+                        <a href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-logging', array( 'view' => 'report' ) ) ?>">
                             <div class="report-status with-corner">
                                 <img src="<?php echo cp_defender()->getPluginUrl() ?>assets/img/audit-pre.svg">
                                 <strong><?php _e( "AUDIT LOGGING", cp_defender()->domain ) ?></strong>
@@ -45,7 +45,7 @@ class Report_Free extends Behavior {
                         </a>
                     </div>
                     <div class="col-half">
-                        <a href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'reporting' ) ) ?>">
+                        <a href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'reporting' ) ) ?>">
                             <div class="report-status with-corner">
                                 <img src="<?php echo cp_defender()->getPluginUrl() ?>assets/img/lockout-pre.svg">
                                 <strong><?php _e( "IP LOCKOUTS", cp_defender()->domain ) ?></strong>
@@ -60,7 +60,7 @@ class Report_Free extends Behavior {
                     <div>
 						<?php printf( __( " Automated reports are included in a PSOURCE membership along with 100+ plugins
                         & themes, 24/7 support and lots of handy site management tools – <a target='_blank' href=\"%s\">Try
-                            it all absolutely FREE</a>", cp_defender()->domain ), Utils::instance()->campaignURL( 'defender_dash_reports_upsell_link' ) ) ?>
+                            it all absolutely FREE</a>", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->campaignURL( 'defender_dash_reports_upsell_link' ) ) ?>
                     </div>
                 </div>
                 <div class="clear"></div>
@@ -73,7 +73,7 @@ class Report_Free extends Behavior {
 	 * @return null|string
 	 */
 	private function getScanToolTip() {
-		$isPre    = Utils::instance()->getAPIKey();
+		$isPre    = \CP_Defender\Behavior\Utils::instance()->getAPIKey();
 		$settings = Settings::instance();
 		$active   = $settings->notification;
 		if ( ! $isPre || ! $active ) {
@@ -88,7 +88,7 @@ class Report_Free extends Behavior {
 	}
 
 	private function getAuditToolTip() {
-		$isPre    = Utils::instance()->getAPIKey();
+		$isPre    = \CP_Defender\Behavior\Utils::instance()->getAPIKey();
 		$settings = \CP_Defender\Module\Audit\Model\Settings::instance();
 		$active   = $settings->notification;
 		if ( ! $isPre || ! $active ) {
@@ -103,7 +103,7 @@ class Report_Free extends Behavior {
 	}
 
 	private function getLockoutTooltips() {
-		$isPre    = Utils::instance()->getAPIKey();
+		$isPre    = \CP_Defender\Behavior\Utils::instance()->getAPIKey();
 		$settings = \CP_Defender\Module\IP_Lockout\Model\Settings::instance();
 		$active   = $settings->report;
 		if ( ! $isPre || ! $active ) {

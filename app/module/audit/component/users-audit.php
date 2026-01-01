@@ -42,7 +42,7 @@ class Users_Audit extends Event_Abstract {
 				'context'     => self::CONTEXT_SESSION,
 				'custom_args' => array(
 					//in this state, current user should be the one who log out
-					'username' => Utils::instance()->getDisplayName( get_current_user_id() )
+					'username' => \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() )
 				)
 			),
 			'user_register'         => array(
@@ -212,7 +212,7 @@ class Users_Audit extends Event_Abstract {
 			);
 		} else {
 			return array(
-				sprintf( esc_html__( "%s updated user %s's profile information", cp_defender()->domain ), Utils::instance()->getDisplayName( get_current_user_id() ), $current_user->user_nicename ),
+				sprintf( esc_html__( "%s updated user %s's profile information", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $current_user->user_nicename ),
 				Audit_API::ACTION_UPDATED
 			);
 		}

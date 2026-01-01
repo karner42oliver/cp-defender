@@ -129,10 +129,10 @@ class Scan extends Behavior {
                     <div>
                         <span class="list-label"><?php _e( "Plugins & Themes", cp_defender()->domain ) ?></span>
                         <span class="list-detail">
-                            <?php if ( Utils::instance()->getAPIKey() ): ?>
+                            <?php if ( \CP_Defender\Behavior\Utils::instance()->getAPIKey() ): ?>
 	                            <?php echo $model->getCount( 'vuln' ) == 0 ? ' <i class="def-icon icon-tick"></i>' : '<span class="def-tag tag-error">' . $model->getCount( 'vuln' ) . '</span>' ?>
                             <?php else: ?>
-                                <a href="<?php echo Utils::instance()->campaignURL('defender_dash_filescan_pro_tag') ?>" target="_blank" class="button button-pre button-small"
+                                <a href="<?php echo \CP_Defender\Behavior\Utils::instance()->campaignURL('defender_dash_filescan_pro_tag') ?>" target="_blank" class="button button-pre button-small"
 								tooltip="<?php esc_attr_e( "Try Defender Pro free today", cp_defender()->domain ) ?>">
                                     <?php _e( "Pro Feature", cp_defender()->domain ) ?>
                                 </a>
@@ -144,10 +144,10 @@ class Scan extends Behavior {
                     <div>
                         <span class="list-label"><?php _e( "Suspicious Code", cp_defender()->domain ) ?></span>
                         <span class="list-detail">
-			                <?php if ( Utils::instance()->getAPIKey() ): ?>
+			                <?php if ( \CP_Defender\Behavior\Utils::instance()->getAPIKey() ): ?>
 				                <?php echo $model->getCount( 'content' ) == 0 ? ' <i class="def-icon icon-tick"></i>' : '<span class="def-tag tag-error">' . $model->getCount( 'content' ) . '</span>' ?>
 			                <?php else: ?>
-                                <a href="<?php echo Utils::instance()->campaignURL('defender_dash_filescan_pro_tag') ?>" target="_blank" class="button button-pre button-small"
+                                <a href="<?php echo \CP_Defender\Behavior\Utils::instance()->campaignURL('defender_dash_filescan_pro_tag') ?>" target="_blank" class="button button-pre button-small"
 								tooltip="<?php esc_attr_e( "Try Defender Pro free today", cp_defender()->domain ) ?>">
                                     <?php _e( "Pro Feature", cp_defender()->domain ) ?>
                                 </a>
@@ -161,11 +161,10 @@ class Scan extends Behavior {
 		?>
         <div class="row">
             <div class="col-third tl">
-                <a href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-scan' ) ?>"
+                <a href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan' ) ?>"
                    class="button button-small button-secondary"><?php _e( "VIEW REPORT", cp_defender()->domain ) ?></a>
             </div>
             <div class="col-two-third tr">
-				<?php if ( cp_defender()->isFree == false ): ?>
                 <p class="status-text">
 					<?php
 					if ( !empty( Settings::instance()->notification ) ) {
@@ -182,7 +181,6 @@ class Scan extends Behavior {
 						}
 					}
 					?>
-					<?php endif; ?>
                 </p>
             </div>
         </div>

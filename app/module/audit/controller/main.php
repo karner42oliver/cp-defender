@@ -71,57 +71,6 @@ class Main extends \CP_Defender\Controller {
 		$this->add_action( 'auditReportCron', 'auditReportCron' );
 	}
 
-	/**
-	 * Add submit admin page
-	 */
-	public function adminMenu() {
-		$cap = is_multisite() ? 'manage_network_options' : 'manage_options';
-		add_submenu_page( 'cp-defender', esc_html__( "Audit Logging", cp_defender()->domain ), esc_html__( "Audit Logging", cp_defender()->domain ), $cap, $this->slug, array(
-			&$this,
-			'actionIndex'
-		) );
-	}
-
-	public function actionIndex() {
-		$from = HTTP_Helper::retrieve_get( 'date_from' );
-		$to   = HTTP_Helper::retrieve_get( 'date_to' );
-
-		if ( $from ) {
-			$from = strtotime( $from );
-		} else {
-			$from = strtotime( '-30 days' );
-		}
-
-		if ( $to ) {
-			$to = strtotime( $to );
-		} else {
-			$to = time();
-		}
-
-		$this->renderPartial( 'main', array(
-			'from'           => date( 'm/d/Y', $from ),
-			'to'             => date( 'm/d/Y', $to ),
-			'email_search'   => $this->email_search,
-			'settings'       => Settings::instance()
-		) );
-	}
-
-	public function scripts() {
-		if ( $this->isInPage() ) {
-			\WDEV_Plugin_Ui::load( cp_defender()->getPluginUrl() . 'shared-ui/' );
-			wp_enqueue_script( 'defender' );
-			wp_enqueue_style( 'defender' );
-			wp_enqueue_script( 'audit', cp_defender()->getPluginUrl() . 'app/module/audit/js/script.js', array(
-				'jquery-effects-core'
-			) );
-			wp_enqueue_script( 'audit-momentjs', cp_defender()->getPluginUrl() . 'app/module/audit/js/moment/moment.min.js' );
-			wp_enqueue_style( 'audit-daterangepicker', cp_defender()->getPluginUrl() . 'app/module/audit/js/daterangepicker/daterangepicker.css' );
-			wp_enqueue_script( 'audit-daterangepicker', cp_defender()->getPluginUrl() . 'app/module/audit/js/daterangepicker/daterangepicker.js' );
-		} else {
-			wp_enqueue_script( 'audit', cp_defender()->getPluginUrl() . 'app/module/audit/js/script.js' );
-		}
-	}
-
 	public function exportAsCvs() {
 		if ( ! $this->checkPermission() ) {
 			return;
@@ -452,7 +401,322 @@ class Main extends \CP_Defender\Controller {
                                     style="-moz-hyphens: auto; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #555555; font-family: Helvetica, Arial, sans-serif; font-size: 15px; font-weight: normal; hyphens: auto; line-height: 26px; margin: 0; padding: 10px 0 0; text-align: left; vertical-align: top; word-wrap: break-word;">
                                     <p style="Margin: 0; Margin-bottom: 0; color: #555555; font-family: Helvetica, Arial, sans-serif; font-size: 15px; font-weight: normal; line-height: 26px; margin: 0; margin-bottom: 0; padding: 0 0 24px; text-align: left;">
                                         <a class="plugin-brand"
-                                           href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-logging', array(
-                                                           'date_from' => date( 'm/d/Y', strtotime( $date_from ) ),
-                                                           'date_to' => date( 'm/d/Y', strtotime( $date_to ) )
-                                               ) ) ?>"
+                                           href="<?php echo network_admin_url( 'admin.php?page=wdf-logging&date_from=' . date( 'm/d/Y', strtotime( $date_from ) ) . '&date_to=' . date( 'm/d/Y', strtotime( $date_to ) ) ) ?>"
+                                           style="Margin: 0; color: #ff5c28; display: inline-block; font: inherit; font-family: Helvetica, Arial, sans-serif; font-weight: normal; line-height: 1.3; margin: 0; padding: 0; text-align: left; text-decoration: none;"><?php _e( "You can view the full audit report for your site here.", cp_defender()->domain ) ?>
+                                            <img
+                                                    class="icon-arrow-right"
+                                                    src="<?php echo cp_defender()->getPluginUrl() ?>assets/email-images/icon-arrow-right-defender.png"
+                                                    alt="Arrow"
+                                                    style="-ms-interpolation-mode: bicubic; border: none; clear: both; display: inline-block; margin: -2px 0 0 5px; max-width: 100%; outline: none; text-decoration: none; vertical-align: middle; width: auto;"></a>
+                                    </p>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <table class="main-signature"
+                               style="border-collapse: collapse; border-spacing: 0; padding: 0; text-align: left; vertical-align: top;">
+                            <tbody>
+                            <tr style="padding: 0; text-align: left; vertical-align: top;">
+                                <td class="main-signature-content"
+                                    style="-moz-hyphens: auto; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #555555; font-family: Helvetica, Arial, sans-serif; font-size: 15px; font-weight: normal; hyphens: auto; line-height: 26px; margin: 0; padding: 0; text-align: left; vertical-align: top; word-wrap: break-word;">
+                                    <p style="Margin: 0; Margin-bottom: 0; color: #555555; font-family: Helvetica, Arial, sans-serif; font-size: 15px; font-weight: normal; line-height: 26px; margin: 0; margin-bottom: 0; padding: 0 0 24px; text-align: left;">
+                                        Stay safe,</p>
+                                    <p class="last-item"
+                                       style="Margin: 0; Margin-bottom: 0; color: #555555; font-family: Helvetica, Arial, sans-serif; font-size: 15px; font-weight: normal; line-height: 26px; margin: 0; margin-bottom: 0; padding: 0; text-align: left;">
+                                        WP Defender <br><strong>WPMU DEV Security Hero</strong></p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+			<?php
+			$table = ob_get_clean();
+		} else {
+			$table = '<p>' . sprintf( esc_html__( "There were no events logged for %s", cp_defender()->domain ), network_site_url() ) . '</p>';
+		}
+
+		$template = $this->renderPartial( 'email_template', array(
+			'message' => $table,
+			'subject' => sprintf( esc_html__( "Here’s what’s been happening at %s", cp_defender()->domain ), network_site_url() )
+		), false );
+
+
+		foreach ( Settings::instance()->receipts as $user_id ) {
+			$user = get_user_by( 'id', $user_id );
+			if ( ! is_object( $user ) ) {
+				continue;
+			}
+			//prepare the parameters
+			$email = $user->user_email;
+
+			$no_reply_email = "noreply@" . parse_url( get_site_url(), PHP_URL_HOST );
+			$no_reply_email = apply_filters( 'wd_audit_noreply_email', $no_reply_email );
+			$headers        = array(
+				'From: Defender <' . $no_reply_email . '>',
+				'Content-Type: text/html; charset=UTF-8'
+			);
+			$params         = array(
+				'USER_NAME' => $this->getDisplayName( $user_id ),
+				'SITE_URL'  => network_site_url(),
+			);
+			$email_content  = $template;
+			foreach ( $params as $key => $val ) {
+				$email_content = str_replace( '{' . $key . '}', $val, $email_content );
+			}
+			wp_mail( $email, sprintf( esc_html__( "Here’s what’s been happening at %s", cp_defender()->domain ), network_site_url() ), $email_content, $headers );
+		}
+
+		$settings->lastReportSent = time();
+		$settings->save();
+	}
+
+	/**
+	 * activate audit
+	 */
+	public function activeAudit() {
+		if ( ! $this->checkPermission() ) {
+			return;
+		}
+
+		if ( ! wp_verify_nonce( HTTP_Helper::retrieve_post( '_wpnonce' ), 'activeAudit' ) ) {
+			return;
+		}
+
+		$settings = Settings::instance();
+		if ( $settings->enabled == true ) {
+			$settings->enabled = false;
+		} else {
+			$settings->enabled = true;
+		}
+		$settings->save();
+		Utils::instance()->submitStatsToDev();
+		wp_send_json_success( array(
+			'url' => network_admin_url( 'admin.php?page=wdf-logging' )
+		) );
+	}
+
+	/**
+	 * Add submit admin page
+	 */
+	public function adminMenu() {
+		$cap = is_multisite() ? 'manage_network_options' : 'manage_options';
+		add_submenu_page( 'cp-defender', esc_html__( "Audit Logging", cp_defender()->domain ), esc_html__( "Audit Logging", cp_defender()->domain ), $cap, $this->slug, array(
+			&$this,
+			'actionIndex'
+		) );
+	}
+
+	public function scripts() {
+		if ( $this->isInPage() ) {
+			\WDEV_Plugin_Ui::load( cp_defender()->getPluginUrl() . 'shared-ui/' );
+			wp_enqueue_script( 'defender' );
+			wp_enqueue_style( 'defender' );
+			wp_enqueue_script( 'audit', cp_defender()->getPluginUrl() . 'app/module/audit/js/script.js', array(
+				'jquery-effects-core'
+			) );
+			wp_enqueue_script( 'audit-momentjs', cp_defender()->getPluginUrl() . 'app/module/audit/js/moment/moment.min.js' );
+			wp_enqueue_style( 'audit-daterangepicker', cp_defender()->getPluginUrl() . 'app/module/audit/js/daterangepicker/daterangepicker.css' );
+			wp_enqueue_script( 'audit-daterangepicker', cp_defender()->getPluginUrl() . 'app/module/audit/js/daterangepicker/daterangepicker.js' );
+		} else {
+			wp_enqueue_script( 'audit', cp_defender()->getPluginUrl() . 'app/module/audit/js/script.js' );
+		}
+	}
+
+	public function actionIndex() {
+		$view = HTTP_Helper::retrieve_get( 'view' );
+		switch ( $view ) {
+			case 'audit':
+			default:
+				$this->_renderAudit();
+				break;
+			case 'report':
+				$this->_renderReport();
+				break;
+			case'settings':
+				$this->_renderSettings();
+				break;
+		}
+	}
+
+	private function _renderSettings() {
+		$settings = Settings::instance();
+		if ( $settings->enabled ) {
+			$this->render( 'settings', array(
+				'settings' => $settings
+			) );
+		} else {
+			$this->render( 'new' );
+		}
+	}
+
+	/**
+	 *
+	 */
+	private function _renderAudit() {
+		if ( Settings::instance()->enabled ) {
+			$date_format = 'm/d/Y';
+			$this->email_search->add_script();
+			$this->email_search->placeholder = __( "Type a user’s name", cp_defender()->domain );
+			$this->email_search->empty_msg   = __( "We did not find an user with this name...", cp_defender()->domain );
+			$from                            = Http_Helper::retrieve_get( 'date_from', date( $date_format, strtotime( 'today midnight', strtotime( '-7 days', current_time( 'timestamp' ) ) ) ) );
+			$to                              = Http_Helper::retrieve_get( 'date_to', date( $date_format, current_time( 'timestamp' ) ) );
+			$this->render( 'main', array(
+				'email_search' => $this->email_search,
+				'from'         => $from,
+				'to'           => $to,
+				//'table'        => $this->_renderTable( $data )
+			) );
+		} else {
+			$this->render( 'new' );
+		}
+	}
+
+	/**
+	 * @return array
+	 */
+	private function prepareAuditParams() {
+		$date_format = 'm/d/Y';
+		$attributes  = array(
+			'date_from'   => date( $date_format, strtotime( '-7 days', current_time( 'timestamp' ) ) ),
+			'date_to'     => date( $date_format, current_time( 'timestamp' ) ),
+			'user_id'     => '',
+			'event_type'  => '',
+			'ip'          => '',
+			'context'     => '',
+			'action_type' => '',
+			'blog_id'     => 1,
+			'date_range'  => HTTP_Helper::retrieve_get( 'date_range', null ),
+			'paged'       => HTTP_Helper::retrieve_get( 'paged', 1 )
+		);
+		$params      = array();
+		foreach ( $attributes as $att => $value ) {
+			$params[ $att ] = HTTP_Helper::retrieve_get( $att, $value );
+			if ( $att == 'date_from' || $att == 'date_to' ) {
+				$df_object = \DateTime::createFromFormat( $date_format, $params[ $att ] );
+				//check if the date string is right, if not, we use default
+				if ( is_object( $df_object ) ) {
+					$params[ $att ] = $df_object->format( 'Y-m-d' );
+				}
+			} elseif ( $att == 'user_id' ) {
+				$params['user_id'] = HTTP_Helper::retrieve_get( 'term' );
+			} elseif ( $att == 'date_range' && in_array( $value, array( 1, 7, 30 ) ) ) {
+				$params['date_from'] = date( 'Y-m-d', strtotime( '-' . $value . ' days', current_time( 'timestamp' ) ) );
+			}
+		}
+
+		$params['date_to']   = trim( $params['date_to'] . ' 23:59:59' );
+		$params['date_from'] = trim( $params['date_from'] . ' 00:00:00' );
+		if ( ! empty( $params['user_id'] ) ) {
+			if ( ! filter_var( $params['user_id'], FILTER_VALIDATE_INT ) ) {
+				$user_id = username_exists( $params['user_id'] );
+				if ( $user_id == false ) {
+					$params['user_id'] = null;
+				} else {
+					$params['user_id'] = $user_id;
+				}
+			}
+		}
+
+		return $params;
+	}
+
+	/**
+	 * @return bool|string
+	 */
+	public function _renderTable( $data ) {
+		return $this->renderPartial( 'table', array(
+			'data'       => $data,
+			'pagination' => is_wp_error( $data ) ? '' : $this->pagination( $data['total_items'], $data['total_pages'] )
+		), false );
+	}
+
+	protected function pagination( $total_items, $total_pages ) {
+		if ( $total_items == 0 ) {
+			return;
+		}
+
+		if ( $total_pages < 2 ) {
+			return;
+		}
+
+		$links        = array();
+		$current_page = absint( HTTP_Helper::retrieve_get( 'paged', 1 ) );
+		/**
+		 * if pages less than 7, display all
+		 * if larger than 7 we will get 3 previous page of current, current, and .., and, and previous, next, first, last links
+		 */
+		$current_url = set_url_scheme( 'http://' . parse_url( get_site_url(), PHP_URL_HOST ) . $_SERVER['REQUEST_URI'] );
+		$current_url = remove_query_arg( array( 'hotkeys_highlight_last', 'hotkeys_highlight_first' ), $current_url );
+		$current_url = esc_url( $current_url );
+
+		$radius = 2;
+		if ( $current_page > 1 && $total_pages > $radius ) {
+			$links['first'] = sprintf( '<a class="button button-light" data-paged="%s" href="%s">%s</a>',
+				1, add_query_arg( 'paged', 1, $current_url ), '&laquo;' );
+			$links['prev']  = sprintf( '<a class="button button-light" data-paged="%s" href="%s">%s</a>',
+				$current_page - 1, add_query_arg( 'paged', $current_page - 1, $current_url ), '&lsaquo;' );
+		}
+
+		for ( $i = 1; $i <= $total_pages; $i ++ ) {
+			if ( ( $i >= 1 && $i <= $radius ) || ( $i > $current_page - 2 && $i < $current_page + 2 ) || ( $i <= $total_pages && $i > $total_pages - $radius ) ) {
+				if ( $i == $current_page ) {
+					$links[ $i ] = sprintf( '<a href="#" class="button button-light" data-paged="%s" disabled="">%s</a>', $i, $i );
+				} else {
+					$links[ $i ] = sprintf( '<a class="button button-light" data-paged="%s" href="%s">%s</a>',
+						$i, add_query_arg( 'paged', $i, $current_url ), $i );
+				}
+			} elseif ( $i == $current_page - $radius || $i == $current_page + $radius ) {
+				$links[ $i ] = '<a href="#" class="button button-light" disabled="">...</a>';
+			}
+		}
+
+		if ( $current_page < $total_pages && $total_pages > $radius ) {
+			$links['next'] = sprintf( '<a class="button button-light" data-paged="%s" href="%s">%s</a>',
+				$current_page + 1, add_query_arg( 'paged', $current_page + 1, $current_url ), '&rsaquo;' );
+			$links['last'] = sprintf( '<a class="button button-light" data-paged="%s" href="%s">%s</a>',
+				$total_pages, add_query_arg( 'paged', $total_pages, $current_url ), '&raquo;' );
+		}
+		$output = join( "\n", $links );
+
+		return $output;
+	}
+
+	public function buildFilterUrl( $type, $value ) {
+		/**
+		 * when click on a filter link, we will havet o include the current date range, and from
+		 * we will need to keep the current get too
+		 */
+		$allowed     = array(
+			'event_type',
+			'term',
+			'date_from',
+			'date_to'
+		);
+		$http_params = array();
+		foreach ( $_GET as $key => $val ) {
+			if ( in_array( $key, $allowed ) && ! empty( $val ) ) {
+				$http_params[ $key ] = $val;
+			}
+		}
+
+		$http_params[ $type ] = $value;
+
+		return '#' . http_build_query( $http_params );
+	}
+
+	private function _renderReport() {
+		if ( Settings::instance()->enabled ) {
+			$this->email_search->lite = false;
+			$this->email_search->add_script();
+			$this->render( 'report', array(
+				'email'   => $this->email_search,
+				'setting' => Settings::instance()
+			) );
+		} else {
+			$this->render( 'new' );
+		}
+	}
+}

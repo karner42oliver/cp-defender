@@ -88,13 +88,3 @@
         </div>
     </div>
 </div>
-<?php
-/*if ( $controller->isShowActivator() ) {
-	$view = cp_defender()->isFree ? 'activator-free' : 'activator';
-	$controller->renderPartial( $view );
-} ?>
-<?php
-if ( cp_defender()->isFree ) {
-	$controller->renderPartial( 'pro-feature' );
-}*/
-?>

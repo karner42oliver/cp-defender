@@ -156,7 +156,7 @@ class Auth_API extends Component {
 			return true;
 		}
 
-		if ( Utils::instance()->isActivatedSingle() ) {
+		if ( \CP_Defender\Behavior\Utils::instance()->isActivatedSingle() ) {
 			$allowedForThisRole = array_intersect( $settings->userRoles, $user->roles );
 
 			return count( $allowedForThisRole ) > 0;

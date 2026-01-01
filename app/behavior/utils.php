@@ -73,9 +73,9 @@ class Utils extends Behavior {
 				return json_decode( $data, true );
 			}
 		} else {
-			return new \WP_Error( 'dashboard_required',
-				sprintf( esc_html__( "PSOURCE Dashboard will be required for this action. Please visit <a href=\"%s\">here</a> and install the PSOURCE Dashboard", cp_defender()->domain )
-					, 'https://premium.wpmudev.org/project/wpmu-dev-dashboard/' ) );
+			// API key not available - feature requires PSOURCE account
+			return new \WP_Error( 'api_key_not_found',
+				esc_html__( "This feature requires an active PSOURCE account.", cp_defender()->domain ) );
 		}
 	}
 
@@ -797,7 +797,7 @@ class Utils extends Behavior {
 						'audit_enabled'   => \CP_Defender\Module\Audit\Model\Settings::instance()->enabled,
 						'last_event_date' => $last_event_date,
 					),
-					'audit_page_url'        => Utils::instance()->getAdminPageUrl( 'wdf-logging' ),
+					'audit_page_url'        => \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-logging' ),
 					'labels'                => $labels,
 					'scan_page_url'         => $this->getAdminPageUrl( 'wdf-scan' ),
 					'hardener_page_url'     => $this->getAdminPageUrl( 'wdf-hardener' ),

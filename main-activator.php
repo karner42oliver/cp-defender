@@ -38,11 +38,8 @@ class WD_Main_Activator {
 
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( &$this, 'addSettingsLink' ) );
 		add_action( 'admin_enqueue_scripts', array( &$this, 'register_styles' ) );
-		if ( ! \CP_Defender\Behavior\Utils::instance()->checkRequirement() ) {
-		} else {
-			if ( \CP_Defender\Behavior\Utils::instance()->getAPIKey() == false ) {
-				cp_defender()->isFree = true;
-			}
+		if ( \CP_Defender\Behavior\Utils::instance()->checkRequirement() ) {
+
 			//start to init navigators
 			\Hammer\Base\Container::instance()->set( 'dashboard', new \CP_Defender\Controller\Dashboard() );
 			\Hammer\Base\Container::instance()->set( 'hardener', new \CP_Defender\Module\Hardener() );

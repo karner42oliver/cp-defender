@@ -12,11 +12,7 @@ class Blacklist extends Behavior {
 	private $end_point = "https://premium.wpmudev.org/api/defender/v1/blacklist-monitoring";
 
 	public function renderBlacklistWidget() {
-		if ( cp_defender()->isFree == false ) {
-			$this->_renderPlaceholder();
-		} else {
-			$this->_renderFree();
-		}
+		$this->_renderFree();
 	}
 
 	private function _renderPlaceholder() {
@@ -75,7 +71,7 @@ class Blacklist extends Behavior {
 
 
 	public function toggleStatus( $status = null, $format = true ) {
-		$api = Utils::instance()->getAPIKey();
+		$api = \CP_Defender\Behavior\Utils::instance()->getAPIKey();
 		if ( ! $api ) {
 			wp_send_json_error( array(
 				'message' => __( "A PSOURCE subscription is required for blacklist monitoring", cp_defender()->domain )
@@ -85,11 +81,11 @@ class Blacklist extends Behavior {
 			$status = $this->_pullStatus();
 		}
 		if ( $status === - 1 ) {
-			$result = Utils::instance()->devCall( $this->end_point, array(), array(
+			$result = \CP_Defender\Behavior\Utils::instance()->devCall( $this->end_point, array(), array(
 				'method' => 'POST'
 			), true );
 		} else {
-			$result = Utils::instance()->devCall( $this->end_point, array(), array(
+			$result = \CP_Defender\Behavior\Utils::instance()->devCall( $this->end_point, array(), array(
 				'method' => 'DELETE'
 			), true );
 		}
@@ -231,7 +227,7 @@ class Blacklist extends Behavior {
 	 */
 	private function _pullStatus() {
 		$endpoint = $this->end_point . '?domain=' . network_site_url();
-		$result   = Utils::instance()->devCall( $endpoint, array(), array(
+		$result   = \CP_Defender\Behavior\Utils::instance()->devCall( $endpoint, array(), array(
 			'method'  => 'GET',
 			'timeout' => 5
 		), true );

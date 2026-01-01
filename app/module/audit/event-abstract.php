@@ -333,7 +333,7 @@ abstract class Event_Abstract extends \Hammer\WP\Component {
 			'site_url'    => network_site_url(),
 			'user_id'     => $user_id,
 			'context'     => $context,
-			'ip'          => Utils::instance()->getUserIp(),
+			'ip'          => \CP_Defender\Behavior\Utils::instance()->getUserIp(),
 			'msg'         => esc_html( $text ),
 			'blog_id'     => get_current_blog_id()
 		);
@@ -346,7 +346,7 @@ abstract class Event_Abstract extends \Hammer\WP\Component {
 	 */
 	private static function get_default_params() {
 		return array(
-			'wp_user'    => is_user_logged_in() ? ( Utils::instance()->getDisplayName( get_current_user_id() ) ) : null,
+			'wp_user'    => is_user_logged_in() ? ( \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ) ) : null,
 			'wp_user_id' => get_current_user_id()
 		);
 	}

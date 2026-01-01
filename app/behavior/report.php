@@ -48,7 +48,7 @@ class Report extends Behavior {
 		?>
         <div <?php echo $this->getLockoutTooltips() ?>
                 class="report-status <?php echo $class ?>">
-            <a href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'reporting' ) ) ?>">
+            <a href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'reporting' ) ) ?>">
                 <img src="<?php echo cp_defender()->getPluginUrl() ?>assets/img/lockout-pre.svg">
                 <strong><?php _e( "IP LOCKOUTS", cp_defender()->domain ) ?></strong>
 				<?php if ( \CP_Defender\Module\IP_Lockout\Model\Settings::instance()->report ): ?>
@@ -93,7 +93,7 @@ class Report extends Behavior {
 		?>
         <div <?php echo $this->getAuditToolTip() ?>
                 class="report-status <?php echo $class ?>">
-            <a href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-logging', array( 'view' => 'report' ) ) ?>">
+            <a href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-logging', array( 'view' => 'report' ) ) ?>">
                 <img src="<?php echo cp_defender()->getPluginUrl() ?>assets/img/audit-pre.svg">
                 <strong><?php _e( "AUDIT LOGGING", cp_defender()->domain ) ?></strong>
 				<?php if ( \CP_Defender\Module\Audit\Model\Settings::instance()->enabled == false ): ?>
@@ -135,7 +135,7 @@ class Report extends Behavior {
 		?>
         <div <?php echo $tooltips ?>
                 class="report-status <?php echo $class ?>">
-            <a href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'reporting' ) ) ?>">
+            <a href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'reporting' ) ) ?>">
                 <img src="<?php echo cp_defender()->getPluginUrl() ?>assets/img/scanning-pre.svg">
                 <strong><?php _e( "FILE SCANNING", cp_defender()->domain ) ?></strong>
 				<?php if ( Settings::instance()->notification ): ?>
@@ -170,7 +170,7 @@ class Report extends Behavior {
 	 * @return null|string
 	 */
 	private function getScanToolTip() {
-		$isPre    = Utils::instance()->getAPIKey();
+		$isPre    = \CP_Defender\Behavior\Utils::instance()->getAPIKey();
 		$settings = Settings::instance();
 		$active   = $settings->notification;
 		if ( ! $isPre || ! $active ) {

@@ -61,7 +61,7 @@ class Widget extends Behavior {
                     </ul>
                     <div class="row">
                         <div class="col-third tl">
-                            <a href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'logs' ) ) ?>"
+                            <a href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'logs' ) ) ?>"
                                class="button button-small button-secondary">
 								<?php _e( "View logs", cp_defender()->domain ) ?></a>
                         </div>

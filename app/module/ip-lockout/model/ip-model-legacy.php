@@ -99,7 +99,7 @@ class IP_Model_Legacy extends Model {
 			self::EVENT_BEFORE_INSERT  => array(
 				array(
 					function () use ( $that ) {
-						if ( Utils::instance()->isActivatedSingle() == false ) {
+						if ( \CP_Defender\Behavior\Utils::instance()->isActivatedSingle() == false ) {
 							cp_defender()->global['oldBlog'] = get_current_blog_id();
 							switch_to_blog( 1 );
 						}
@@ -109,7 +109,7 @@ class IP_Model_Legacy extends Model {
 			self::EVENT_BEFORE_UPDATE  => array(
 				array(
 					function () use ( $that ) {
-						if ( Utils::instance()->isActivatedSingle() == false ) {
+						if ( \CP_Defender\Behavior\Utils::instance()->isActivatedSingle() == false ) {
 							cp_defender()->global['oldBlog'] = get_current_blog_id();
 							switch_to_blog( 1 );
 						}
@@ -119,7 +119,7 @@ class IP_Model_Legacy extends Model {
 			self::EVENT_AFTER_INSERT   => array(
 				array(
 					function () use ( $that ) {
-						if ( Utils::instance()->isActivatedSingle() == false ) {
+						if ( \CP_Defender\Behavior\Utils::instance()->isActivatedSingle() == false ) {
 							if ( isset( cp_defender()->global['oldBlog'] ) ) {
 								switch_to_blog( cp_defender()->global['oldBlog'] );
 								unset( cp_defender()->global['oldBlog'] );
@@ -131,7 +131,7 @@ class IP_Model_Legacy extends Model {
 			self::EVENT_AFTER_UPDATE   => array(
 				array(
 					function () use ( $that ) {
-						if ( Utils::instance()->isActivatedSingle() == false ) {
+						if ( \CP_Defender\Behavior\Utils::instance()->isActivatedSingle() == false ) {
 							if ( isset( cp_defender()->global['oldBlog'] ) ) {
 								switch_to_blog( cp_defender()->global['oldBlog'] );
 								unset( cp_defender()->global['oldBlog'] );
@@ -143,7 +143,7 @@ class IP_Model_Legacy extends Model {
 			self::EVENT_BEFORE_DELELTE => array(
 				array(
 					function () use ( $that ) {
-						if ( Utils::instance()->isActivatedSingle() == false ) {
+						if ( \CP_Defender\Behavior\Utils::instance()->isActivatedSingle() == false ) {
 							cp_defender()->global['oldBlog'] = get_current_blog_id();
 							switch_to_blog( 1 );
 						}
@@ -153,7 +153,7 @@ class IP_Model_Legacy extends Model {
 			self::EVENT_AFTER_DELETE   => array(
 				array(
 					function () use ( $that ) {
-						if ( Utils::instance()->isActivatedSingle() == false ) {
+						if ( \CP_Defender\Behavior\Utils::instance()->isActivatedSingle() == false ) {
 							if ( isset( cp_defender()->global['oldBlog'] ) ) {
 								switch_to_blog( cp_defender()->global['oldBlog'] );
 								unset( cp_defender()->global['oldBlog'] );

@@ -13,7 +13,7 @@ use CP_Defender\Module\Scan\Model\Settings;
 
 class Activator extends Behavior {
 	public function activateModule() {
-		if ( ! Utils::instance()->checkPermission() ) {
+		if ( ! \CP_Defender\Behavior\Utils::instance()->checkPermission() ) {
 			return;
 		}
 
@@ -32,7 +32,7 @@ class Activator extends Behavior {
 						$settings->time         = '4:0';
 						$settings->day          = 'monday';
 						$settings->frequency    = 7;
-						$cronTime               = Utils::instance()->reportCronTimestamp( $settings->time, 'scanReportCron' );
+						$cronTime               = \CP_Defender\Behavior\Utils::instance()->reportCronTimestamp( $settings->time, 'scanReportCron' );
 						wp_schedule_event( $cronTime, 'daily', 'scanReportCron' );
 						$settings->save();
 						//start a new scan
@@ -46,7 +46,7 @@ class Activator extends Behavior {
 						$settings->time         = '4:0';
 						$settings->day          = 'monday';
 						$settings->frequency    = 7;
-						$cronTime               = Utils::instance()->reportCronTimestamp( $settings->time, 'auditReportCron' );
+						$cronTime               = \CP_Defender\Behavior\Utils::instance()->reportCronTimestamp( $settings->time, 'auditReportCron' );
 						wp_schedule_event( $cronTime, 'daily', 'auditReportCron' );
 						$activated[] = $item;
 						$settings->save();
@@ -63,7 +63,7 @@ class Activator extends Behavior {
 						$settings->report_frequency = 7;
 						$settings->report_day       = 'monday';
 						$settings->report_time      = '4:0';
-						$cronTime                   = Utils::instance()->reportCronTimestamp( $settings->report_time, 'lockoutReportCron' );
+						$cronTime                   = \CP_Defender\Behavior\Utils::instance()->reportCronTimestamp( $settings->report_time, 'lockoutReportCron' );
 						wp_schedule_event( $cronTime, 'daily', 'lockoutReportCron' );
 						$activated[] = $item;
 						$settings->save();

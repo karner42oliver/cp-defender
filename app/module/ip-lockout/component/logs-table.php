@@ -128,7 +128,7 @@ class Logs_Table extends \WP_List_Table {
 	 * @return string
 	 */
 	public function column_ip( Log_Model $log ) {
-		$ip = Utils::instance()->getUserIp();
+		$ip = \CP_Defender\Behavior\Utils::instance()->getUserIp();
 		if ( $ip == $log->get_ip() ) {
 			return '<span tooltip="' . esc_attr( $ip ) . '" class="badge">' . __( "You", cp_defender()->domain ) . '</span>';
 		} else {
@@ -324,7 +324,7 @@ class Logs_Table extends \WP_List_Table {
 	public function print_column_headers( $with_id = true ) {
 		list( $columns, $hidden, $sortable, $primary ) = $this->get_column_info();
 
-		$current_url = Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'logs' ) );
+		$current_url = \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'logs' ) );
 
 		if ( isset( $_GET['orderby'] ) ) {
 			$current_orderby = $_GET['orderby'];

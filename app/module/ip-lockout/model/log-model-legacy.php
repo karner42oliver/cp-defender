@@ -84,14 +84,14 @@ class Log_Model_Legacy extends Model {
 
 	public function before_update() {
 		$this->blog_id = get_current_blog_id();
-		if ( Utils::instance()->isActivatedSingle() == false ) {
+		if ( \CP_Defender\Behavior\Utils::instance()->isActivatedSingle() == false ) {
 			switch_to_blog( 1 );
 		}
 	}
 
 	public function before_insert() {
 		$this->blog_id = get_current_blog_id();
-		if ( Utils::instance()->isActivatedSingle() == false ) {
+		if ( \CP_Defender\Behavior\Utils::instance()->isActivatedSingle() == false ) {
 			switch_to_blog( 1 );
 		}
 	}
@@ -100,7 +100,7 @@ class Log_Model_Legacy extends Model {
 	 * @return string
 	 */
 	public function get_date() {
-		return Utils::instance()->formatDateTime( date( 'Y-m-d H:i:s', $this->date ) );
+		return \CP_Defender\Behavior\Utils::instance()->formatDateTime( date( 'Y-m-d H:i:s', $this->date ) );
 	}
 
 	/**
@@ -146,7 +146,7 @@ class Log_Model_Legacy extends Model {
 			self::EVENT_AFTER_INSERT  => array(
 				array(
 					function () use ( $that ) {
-						if ( Utils::instance()->isActivatedSingle() == false ) {
+						if ( \CP_Defender\Behavior\Utils::instance()->isActivatedSingle() == false ) {
 							switch_to_blog( $that->blog_id );
 						}
 					}
@@ -155,7 +155,7 @@ class Log_Model_Legacy extends Model {
 			self::EVENT_AFTER_UPDATE  => array(
 				array(
 					function () use ( $that ) {
-						if ( Utils::instance()->isActivatedSingle() == false ) {
+						if ( \CP_Defender\Behavior\Utils::instance()->isActivatedSingle() == false ) {
 							switch_to_blog( $that->blog_id );
 						}
 					}

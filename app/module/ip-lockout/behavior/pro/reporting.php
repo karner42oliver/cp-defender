@@ -30,7 +30,7 @@ class Reporting extends Behavior {
 			$lastReportSent = strtotime( '-31 days', current_time( 'timestamp' ) );
 		}
 
-		if ( ! Utils::instance()->isReportTime( $settings->report_frequency, $settings->report_day, $lastReportSent ) ) {
+		if ( ! \CP_Defender\Behavior\Utils::instance()->isReportTime( $settings->report_frequency, $settings->report_day, $lastReportSent ) ) {
 			return false;
 		}
 
@@ -79,7 +79,7 @@ class Reporting extends Behavior {
 
 	public function scheduleReport() {
 		$settings = Settings::instance();
-		$cronTime = Utils::instance()->reportCronTimestamp( $settings->report_time, 'lockoutReportCron' );
+		$cronTime = \CP_Defender\Behavior\Utils::instance()->reportCronTimestamp( $settings->report_time, 'lockoutReportCron' );
 		if ( $settings->report == true ) {
 			wp_schedule_event( $cronTime, 'daily', 'lockoutReportCron' );
 		}

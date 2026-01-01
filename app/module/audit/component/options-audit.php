@@ -51,7 +51,7 @@ class Options_Audit extends Event_Abstract {
 		}
 
 		$text = sprintf( esc_html__( "%s update network option %s from %s to %s", cp_defender()->domain ),
-			Utils::instance()->getDisplayName( get_current_user_id() ), $option_human_read, $old, $new );
+			\CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $option_human_read, $old, $new );
 
 		return array( $text, self::CONTEXT_SETTINGS );
 	}
@@ -78,9 +78,9 @@ class Options_Audit extends Event_Abstract {
 			switch ( $option ) {
 				case 'users_can_register':
 					if ( $new == 0 ) {
-						$text = sprintf( esc_html__( "%s disabled site registration", cp_defender()->domain ), Utils::instance()->getDisplayName( get_current_user_id() ) );
+						$text = sprintf( esc_html__( "%s disabled site registration", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ) );
 					} else {
-						$text = sprintf( esc_html__( "%s opened site registration", cp_defender()->domain ), Utils::instance()->getDisplayName( get_current_user_id() ) );
+						$text = sprintf( esc_html__( "%s opened site registration", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ) );
 					}
 					break;
 				case 'start_of_week':
@@ -88,16 +88,16 @@ class Options_Audit extends Event_Abstract {
 					$old_day = $wp_locale->get_weekday( $old );
 					$new_day = $wp_locale->get_weekday( $new );
 					$text    = sprintf( esc_html__( "%s update option %s from %s to %s", cp_defender()->domain ),
-						Utils::instance()->getDisplayName( get_current_user_id() ), $option_human_read, $old_day, $new_day );
+						\CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $option_human_read, $old_day, $new_day );
 					break;
 				case 'WPLANG':
 					//no old value here
 					$text = sprintf( esc_html__( "%s update option %s to %s", cp_defender()->domain ),
-						Utils::instance()->getDisplayName( get_current_user_id() ), $option_human_read, $old, $new );
+						\CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $option_human_read, $old, $new );
 					break;
 				default:
 					$text = sprintf( esc_html__( "%s update option %s from %s to %s", cp_defender()->domain ),
-						Utils::instance()->getDisplayName( get_current_user_id() ), $option_human_read, $old, $new );
+						\CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $option_human_read, $old, $new );
 					break;
 			}
 

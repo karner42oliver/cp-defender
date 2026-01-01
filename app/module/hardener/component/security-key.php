@@ -50,7 +50,7 @@ class Security_Key extends Rule {
 	}
 
 	public function updateSecurityReminder() {
-		if ( ! Utils::instance()->checkPermission() ) {
+		if ( ! \CP_Defender\Behavior\Utils::instance()->checkPermission() ) {
 			return;
 		}
 
@@ -79,7 +79,7 @@ class Security_Key extends Rule {
 		} else {
 			Settings::instance()->addToResolved( self::$slug );
 			wp_send_json_success( array(
-				'message' => sprintf( __( 'All key salts have been regenerated. You will now need to <a href="%s"><strong>re-login</strong></a>.<br/>This will auto reload after <span class="hardener-timer">10</span> seconds.', cp_defender()->domain ), Utils::instance()->getAdminPageUrl( 'wdf-hardener' ) ),
+				'message' => sprintf( __( 'All key salts have been regenerated. You will now need to <a href="%s"><strong>re-login</strong></a>.<br/>This will auto reload after <span class="hardener-timer">10</span> seconds.', cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-hardener' ) ),
 				'reload'  => 10
 			) );
 		}

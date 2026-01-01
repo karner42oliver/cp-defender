@@ -101,7 +101,7 @@
                 </div>
                 <div class="column">
                     <p>
-                        <a href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'export', '_wpnonce' => wp_create_nonce( 'defipexport' ) ) ) ?>"
+                        <a href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'export', '_wpnonce' => wp_create_nonce( 'defipexport' ) ) ) ?>"
                            class="button button-secondary export">
 							<?php _e( "Export", cp_defender()->domain ) ?></a>
                     </p>

@@ -152,7 +152,7 @@ class Settings extends \Hammer\WP\Settings {
 		$this->last_status_check = time();
 		$this->save();
 		if ( $devPush ) {
-			Utils::instance()->submitStatsToDev();
+			\CP_Defender\Behavior\Utils::instance()->submitStatsToDev();
 		}
 	}
 

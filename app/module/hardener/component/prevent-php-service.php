@@ -21,7 +21,7 @@ class Prevent_PHP_Service extends Rule_Service implements IRule_Service {
 		$cache = WP_Helper::getArrayCache()->get( 'Prevent_PHP_Service', null );
 		if ( $cache === null ) {
 			//init upload dir and a php file
-			Utils::instance()->getDefUploadDir();
+			\CP_Defender\Behavior\Utils::instance()->getDefUploadDir();
 			$url    	= WP_Helper::getUploadUrl();
 			$url    	= $url . '/cp-defender/index.php';
 			$ssl_verify = apply_filters( 'defender_ssl_verify', true ); //most hosts dont really have valid ssl or ssl still pending

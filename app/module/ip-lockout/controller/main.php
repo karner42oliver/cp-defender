@@ -33,9 +33,6 @@ class Main extends Controller {
 		$behaviors = array(
 			'utils' => '\CP_Defender\Behavior\Utils',
 		);
-		if ( cp_defender()->isFree == false ) {
-			$behaviors['pro'] = '\CP_Defender\Module\IP_Lockout\Behavior\Pro\Reporting';
-		}
 
 		return $behaviors;
 	}
@@ -188,7 +185,7 @@ class Main extends Controller {
 				) );
 			} else {
 				wp_send_json_success( array(
-					'message' => sprintf( __( "IP %s has been added to your blacklist. You can control your blacklist in <a href=\"%s\">IP Lockouts.</a>", cp_defender()->domain ), $ip, Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'blacklist' ) ) )
+					'message' => sprintf( __( "IP %s has been added to your blacklist. You can control your blacklist in <a href=\"%s\">IP Lockouts.</a>", cp_defender()->domain ), $ip, \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'blacklist' ) ) )
 				) );
 			}
 		} else {
@@ -365,7 +362,7 @@ class Main extends Controller {
 	 * cron for delete old log
 	 */
 	public function cleanUpOldLog() {
-		$timestamp = Utils::instance()->localToUtc( apply_filters( 'ip_lockout_logs_store_backward', '-' . Settings::instance()->storage_days . ' days' ) );
+		$timestamp = \CP_Defender\Behavior\Utils::instance()->localToUtc( apply_filters( 'ip_lockout_logs_store_backward', '-' . Settings::instance()->storage_days . ' days' ) );
 		Log_Model::deleteAll( array(
 			'date' => array(
 				'compare' => '<=',
@@ -718,7 +715,7 @@ class Main extends Controller {
 			if ( $this->hasMethod( 'scheduleReport' ) ) {
 				$this->scheduleReport();
 			}
-			Utils::instance()->submitStatsToDev();
+			\CP_Defender\Behavior\Utils::instance()->submitStatsToDev();
 			wp_send_json_success( $res );
 		} else {
 			wp_send_json_error( array(
@@ -887,7 +884,7 @@ return;
 
 	private function _renderReport() {
 		$this->email_search->add_script();
-		$view = cp_defender()->isFree ? 'notification/report-free' : 'notification/report';
+		$view = 'notification/report-free';
 		$this->render( $view, array(
 			'settings'     => Settings::instance(),
 			'email_search' => $this->email_search

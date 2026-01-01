@@ -67,7 +67,7 @@ class Main extends Controller {
 			$this->add_ajax_action( 'defVerifyOTP', 'verifyConfigOTP' );
 			$this->add_ajax_action( 'defDisableOTP', 'disableOTP' );
 			$this->add_ajax_action( 'defRetrieveOTP', 'retrieveOTP', false, true );
-			if ( Utils::instance()->isActivatedSingle() ) {
+			if ( \CP_Defender\Behavior\Utils::instance()->isActivatedSingle() ) {
 				$this->add_filter( 'manage_users_columns', 'alterUsersTable' );
 				$this->add_filter( 'manage_users_custom_column', 'alterUsersTableRow', 10, 3 );
 			} else {

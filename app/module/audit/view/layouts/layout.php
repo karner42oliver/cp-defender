@@ -64,25 +64,25 @@
                     <ul class="inner-nav is-hidden-mobile">
                         <li>
                             <a class="<?php echo \Hammer\Helper\HTTP_Helper::retrieve_get( 'view', false ) == false ? 'active' : null ?>"
-                               href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-logging' ) ?>"><?php _e( "Event Logs", cp_defender()->domain ) ?></a>
+                               href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-logging' ) ?>"><?php _e( "Event Logs", cp_defender()->domain ) ?></a>
                         </li>
                         <li>
                             <a class="<?php echo $controller->isView( 'settings' ) ? 'active' : null ?>"
-                               href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-logging', array( 'view' => 'settings' ) ) ?>"><?php _e( "Settings", cp_defender()->domain ) ?></a>
+                               href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-logging', array( 'view' => 'settings' ) ) ?>"><?php _e( "Settings", cp_defender()->domain ) ?></a>
                         </li>
                         <li>
                             <a class="<?php echo $controller->isView( 'report' ) ? 'active' : null ?>"
-                               href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-logging', array( 'view' => 'report' ) ) ?>"><?php _e( "Reports", cp_defender()->domain ) ?></a>
+                               href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-logging', array( 'view' => 'report' ) ) ?>"><?php _e( "Reports", cp_defender()->domain ) ?></a>
                         </li>
                     </ul>
                     <div class="is-hidden-tablet mline">
                         <select class="mobile-nav">
                             <option <?php selected( '', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view' ) ) ?>
-                                    value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-logging' ) ?>"><?php _e( "Event Logs", cp_defender()->domain ) ?></option>
+                                    value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-logging' ) ?>"><?php _e( "Event Logs", cp_defender()->domain ) ?></option>
                             <option <?php selected( 'settings', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view' ) ) ?>
-                                    value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-logging', array( 'view' => 'settings' ) ) ?>"><?php _e( "Settings", cp_defender()->domain ) ?></option>
+                                    value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-logging', array( 'view' => 'settings' ) ) ?>"><?php _e( "Settings", cp_defender()->domain ) ?></option>
                             <option <?php selected( 'report', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view' ) ) ?>
-                                    value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-logging', array( 'view' => 'report' ) ) ?>"><?php _e( "Reports", cp_defender()->domain ) ?></option>
+                                    value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-logging', array( 'view' => 'report' ) ) ?>"><?php _e( "Reports", cp_defender()->domain ) ?></option>
                         </select>
                     </div>
                 </div>

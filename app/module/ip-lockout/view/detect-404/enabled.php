@@ -16,7 +16,7 @@
         <div class="box-content">
 			<?php if ( ( $count = ( \CP_Defender\Module\IP_Lockout\Component\Login_Protection_Api::get404Lockouts( strtotime( '-24 hours', current_time( 'timestamp' ) ) ) ) ) > 0 ): ?>
                 <div class="well well-yellow">
-					<?php echo sprintf( __( "There have been %d lockouts in the last 24 hours. <a href=\"%s\"><strong>View log</strong></a>.", cp_defender()->domain ), $count, Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'logs' ) ) ) ?>
+					<?php echo sprintf( __( "There have been %d lockouts in the last 24 hours. <a href=\"%s\"><strong>View log</strong></a>.", cp_defender()->domain ), $count, \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'logs' ) ) ) ?>
                 </div>
 			<?php else: ?>
                 <div class="well well-blue">

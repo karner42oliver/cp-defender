@@ -279,7 +279,7 @@ class Post_Audit extends Event_Abstract {
 				unset( $post_before['post_status'] );
 				if ( serialize( $post_before ) != serialize( $post_after ) ) {
 					return array(
-						sprintf( esc_html__( "%s updated %s \"%s\"", cp_defender()->domain ), Utils::instance()->getDisplayName( get_current_user_id() ), $post_type->labels->singular_name, $post_after['post_title'] ),
+						sprintf( esc_html__( "%s updated %s \"%s\"", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $post_type->labels->singular_name, $post_after['post_title'] ),
 						$post_type->labels->singular_name
 					);
 				}
@@ -287,7 +287,7 @@ class Post_Audit extends Event_Abstract {
 		} else {
 			if ( is_null( $post_before ) ) {
 				return array(
-					sprintf( esc_html__( "%s added new %s \"%s\"", cp_defender()->domain ), Utils::instance()->getDisplayName( get_current_user_id() ), $post_type->labels->singular_name, $post->post_title ),
+					sprintf( esc_html__( "%s added new %s \"%s\"", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $post_type->labels->singular_name, $post->post_title ),
 					$post_type->labels->singular_name
 				);
 			}

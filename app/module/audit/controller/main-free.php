@@ -15,8 +15,12 @@ use CP_Defender\Vendor\Email_Search;
 
 class Main_Free extends \CP_Defender\Controller {
 	protected $slug = 'wdf-logging';
+	public $layout = 'layout';
+	public $email_search;
 
 	public function __construct() {
+		$this->email_search = new Email_Search();
+		
 		if ( $this->is_network_activate( cp_defender()->plugin_slug ) ) {
 			$this->add_action( 'network_admin_menu', 'adminMenu' );
 		} else {
@@ -56,6 +60,26 @@ class Main_Free extends \CP_Defender\Controller {
 	}
 
 	public function actionIndex() {
-		$this->renderPartial( 'free' );
+		$from = HTTP_Helper::retrieve_get( 'date_from' );
+		$to   = HTTP_Helper::retrieve_get( 'date_to' );
+
+		if ( $from ) {
+			$from = strtotime( $from );
+		} else {
+			$from = strtotime( '-30 days' );
+		}
+
+		if ( $to ) {
+			$to = strtotime( $to );
+		} else {
+			$to = time();
+		}
+
+		$this->renderPartial( 'main', array(
+			'from'           => date( 'm/d/Y', $from ),
+			'to'             => date( 'm/d/Y', $to ),
+			'email_search'   => new Email_Search(),
+			'settings'       => Settings::instance()
+		) );
 	}
 }

@@ -13,7 +13,7 @@ use CP_Defender\Module\Scan\Model\Settings;
 
 class Activator_Free extends Behavior{
 	public function activateModule() {
-		if ( ! Utils::instance()->checkPermission() ) {
+		if ( ! \CP_Defender\Behavior\Utils::instance()->checkPermission() ) {
 			return;
 		}
 

@@ -249,7 +249,7 @@ class Login_Protection_Api extends Component {
 		$blacklist = $settings->getIpBlacklist();
 		$whitelist = $settings->getIpWhitelist();
 
-		$ip    = Utils::instance()->getUserIp();
+		$ip    = \CP_Defender\Behavior\Utils::instance()->getUserIp();
 		$nonce = wp_create_nonce( 'lockoutIPAction' );
 		if ( $ip != $log->ip ) {
 			if ( ! in_array( $log->ip, $blacklist ) ) {
@@ -335,10 +335,10 @@ class Login_Protection_Api extends Component {
 				break;
 		}
 
-		$toUTC = Utils::instance()->localToUtc( $timeString );
+		$toUTC = \CP_Defender\Behavior\Utils::instance()->localToUtc( $timeString );
 		if ( $toUTC <= time() ) {
 			if ( $utc ) {
-				return Utils::instance()->localToUtc( $nextTimeString );
+				return \CP_Defender\Behavior\Utils::instance()->localToUtc( $nextTimeString );
 			} else {
 				return strtotime( $timeString );
 			}

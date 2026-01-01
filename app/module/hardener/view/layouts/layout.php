@@ -86,7 +86,7 @@
 							<!--                            <a class="-->
 							<?php //echo $controller->isView( 'notification' ) ? 'active' : null ?><!--"-->
 							<!--                               href="-->
-							<?php //echo Utils::instance()->getAdminPageUrl( 'wdf-hardener', array( 'view' => 'notification' ) ) ?><!--">-->
+							<?php //echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-hardener', array( 'view' => 'notification' ) ) ?><!--">-->
 							<?php //_e( "Notifications", cp_defender()->domain ) ?><!--</a>-->
 							<!--                        </li>-->
 						</ul>

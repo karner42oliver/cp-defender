@@ -378,7 +378,7 @@ class Apache_Service extends Rule_Service implements IRule_Service {
 	 * @return String
 	 */
 	protected function generateHtAccessRule( $allow = true ) {
-		$version = Utils::instance()->determineApacheVersion();
+		$version = \CP_Defender\Behavior\Utils::instance()->determineApacheVersion();
 		if ( floatval( $version ) >= 2.4 ) {
 			if ( $allow ) {
 				return 'Require all granted' . PHP_EOL;

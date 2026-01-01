@@ -43,7 +43,7 @@ class Widget extends Behavior {
                             <li>
                                 <div>
                                     <a target="_blank"
-                                       href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-hardener' ) . '#' . $issue::$slug; ?>">
+                                       href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-hardener' ) . '#' . $issue::$slug; ?>">
                                         <span class="list-label"><i
                                                     class="def-icon icon-h-warning"></i><?php echo $issue->getTitle(); ?></span>
                                     </a>
@@ -60,7 +60,7 @@ class Widget extends Behavior {
 				<?php endif; ?>
                 <div class="row">
                     <div class="col-third tl">
-                        <a href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-hardener' ) ?>"
+                        <a href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-hardener' ) ?>"
                            class="button button-small button-secondary"><?php _e( "VIEW ALL", cp_defender()->domain ) ?></a>
                     </div>
                 </div>

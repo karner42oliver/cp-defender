@@ -128,7 +128,7 @@ class Core_Audit extends Event_Abstract {
 		$file   = $args[1]['file'];
 
 		return array(
-			sprintf( esc_html__( '%s updated file %s of %s %s', cp_defender()->domain ), Utils::instance()->getDisplayName( get_current_user_id() ), $file, $type, $object ),
+			sprintf( esc_html__( '%s updated file %s of %s %s', cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $file, $type, $object ),
 			$type == 'plugin' ? self::CONTEXT_PLUGIN : self::CONTEXT_THEME
 		);
 	}
@@ -140,7 +140,7 @@ class Core_Audit extends Event_Abstract {
 			$updates = array_shift( $updates );
 			if ( is_object( $updates ) && property_exists( $updates, 'version' ) ) {
 				return array(
-					sprintf( esc_html__( "%s updated WordPress to %s", cp_defender()->domain ), Utils::instance()->getDisplayName( get_current_user_id() ), $updates->version ),
+					sprintf( esc_html__( "%s updated WordPress to %s", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $updates->version ),
 					self::CONTEXT_CORE
 				);
 			}
@@ -160,7 +160,7 @@ class Core_Audit extends Event_Abstract {
 			}
 			if ( count( $texts ) ) {
 				return array(
-					sprintf( esc_html__( "%s updated themes: %s", cp_defender()->domain ), Utils::instance()->getDisplayName( get_current_user_id() ), implode( ', ', $texts ) ),
+					sprintf( esc_html__( "%s updated themes: %s", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), implode( ', ', $texts ) ),
 					self::CONTEXT_THEME
 				);
 			} else {
@@ -176,7 +176,7 @@ class Core_Audit extends Event_Abstract {
 			}
 			if ( count( $texts ) ) {
 				return array(
-					sprintf( esc_html__( "%s updated plugins: %s", cp_defender()->domain ), Utils::instance()->getDisplayName( get_current_user_id() ), implode( ', ', $texts ) ),
+					sprintf( esc_html__( "%s updated plugins: %s", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), implode( ', ', $texts ) ),
 					self::CONTEXT_PLUGIN
 				);
 			} else {
@@ -193,7 +193,7 @@ class Core_Audit extends Event_Abstract {
 				$version = $theme->get( 'Version' );
 
 				return array(
-					sprintf( esc_html__( "%s updated theme: %s, version %s", cp_defender()->domain ), Utils::instance()->getDisplayName( get_current_user_id() ), $name, $version ),
+					sprintf( esc_html__( "%s updated theme: %s, version %s", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $name, $version ),
 					self::CONTEXT_THEME
 				);
 			} else {
@@ -207,7 +207,7 @@ class Core_Audit extends Event_Abstract {
 				$version = $data['Version'];
 
 				return array(
-					sprintf( esc_html__( "%s updated plugin: %s, version %s", cp_defender()->domain ), Utils::instance()->getDisplayName( get_current_user_id() ), $name, $version ),
+					sprintf( esc_html__( "%s updated plugin: %s, version %s", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $name, $version ),
 					self::CONTEXT_PLUGIN
 				);
 			} else {
@@ -239,13 +239,13 @@ class Core_Audit extends Event_Abstract {
 
 		if ( isset( $upgrader->skin->api->preview_url ) ) {
 			return array(
-				sprintf( esc_html__( "%s installed theme: %s, version %s", cp_defender()->domain ), Utils::instance()->getDisplayName( get_current_user_id() ), $name, $version ),
+				sprintf( esc_html__( "%s installed theme: %s, version %s", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $name, $version ),
 				self::CONTEXT_THEME,
 				self::ACTION_INSTALLED
 			);
 		} else {
 			return array(
-				sprintf( esc_html__( "%s installed plugin: %s, version %s", cp_defender()->domain ), Utils::instance()->getDisplayName( get_current_user_id() ), $name, $version ),
+				sprintf( esc_html__( "%s installed plugin: %s, version %s", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $name, $version ),
 				self::CONTEXT_PLUGIN,
 				self::ACTION_INSTALLED
 			);

@@ -92,7 +92,7 @@
 							<ul class="inner-nav is-hidden-mobile">
 								<li class="issues-nav">
 									<a class="<?php echo \Hammer\Helper\HTTP_Helper::retrieve_get( 'view', false ) == false ? 'active' : null ?>"
-									href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-scan' ) ?>">
+						href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan' ) ?>">
 										<?php _e( "Issues", cp_defender()->domain ) ?>
 										<?php
 										$issues = $model->countAll( \CP_Defender\Module\Scan\Model\Result_Item::STATUS_ISSUE );
@@ -107,7 +107,7 @@
 								<!--                                <a class="-->
 								<?php //echo $controller->isView( 'cleaned' ) ? 'active' : null ?><!--"-->
 								<!--                                   href="-->
-								<?php //echo Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'cleaned' ) ) ?><!--">--><?php //_e( "Cleaned", cp_defender()->domain ) ?>
+								<?php //echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'cleaned' ) ) ?><!--">--><?php //_e( "Cleaned", cp_defender()->domain ) ?>
 								<!--                                    <span>-->
 								<!--                                        --><?php
 								//                                        $issues = $model->countAll( \CP_Defender\Module\Scan\Model\Result_Item::STATUS_FIXED );
@@ -117,7 +117,7 @@
 								<!--                            </li>-->
 								<li>
 									<a class="<?php echo $controller->isView( 'ignored' ) ? 'active' : null ?>"
-									href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'ignored' ) ) ?>">
+						href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'ignored' ) ) ?>">
 										<?php _e( "Ignored", cp_defender()->domain ) ?>
 										<span class="def-ignored">
 											<?php
@@ -128,12 +128,12 @@
 								</li>
 								<li>
 									<a class="<?php echo $controller->isView( 'settings' ) ? 'active' : null ?>"
-									href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'settings' ) ) ?>">
+						href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'settings' ) ) ?>">
 										<?php _e( "Settings", cp_defender()->domain ) ?></a>
 								</li>
 								<li>
 									<a class="<?php echo $controller->isView( 'reporting' ) ? 'active' : null ?>"
-									href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'reporting' ) ) ?>">
+						href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'reporting' ) ) ?>">
 										<?php _e( "Reporting", cp_defender()->domain ) ?></a>
 								</li>
 							</ul>
@@ -142,13 +142,13 @@
 							<nav role="navigation" aria-label="Filters">
 								<select class="mobile-nav">
 									<option <?php selected( '', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view' ) ) ?>
-											value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-scan' ) ?>"><?php _e( "Issues", cp_defender()->domain ) ?></option>
+											value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan' ) ?>"><?php _e( "Issues", cp_defender()->domain ) ?></option>
 									<option <?php selected( 'ignored', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view' ) ) ?>
-											value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'ignored' ) ) ?>"><?php _e( "Ignored", cp_defender()->domain ) ?></option>
+											value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'ignored' ) ) ?>"><?php _e( "Ignored", cp_defender()->domain ) ?></option>
 									<option <?php selected( 'settings', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view' ) ) ?>
-											value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'settings' ) ) ?>"><?php _e( "Settings", cp_defender()->domain ) ?></option>
+											value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'settings' ) ) ?>"><?php _e( "Settings", cp_defender()->domain ) ?></option>
 									<option <?php selected( 'reporting', \Hammer\Helper\HTTP_Helper::retrieve_get( 'view' ) ) ?>
-											value="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'reporting' ) ) ?>"><?php _e( "Reporting", cp_defender()->domain ) ?></option>
+											value="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-scan', array( 'view' => 'reporting' ) ) ?>"><?php _e( "Reporting", cp_defender()->domain ) ?></option>
 								</select>
 							</nav>
                         </div>
@@ -161,6 +161,3 @@
         </div>
     </div>
 </div>
-<?php if ( cp_defender()->isFree ) {
-	$controller->renderPartial( 'pro-feature' );
-} ?>

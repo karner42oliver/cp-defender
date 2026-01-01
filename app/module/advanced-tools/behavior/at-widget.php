@@ -50,7 +50,7 @@ class AT_Widget extends Behavior {
                                 <span>
                                     <?php _e( "Two-factor authentication is currently inactive. Configure and save your settings to finish setup. ", cp_defender()->domain ) ?>
                                 </span>
-                                <a href="<?php echo Utils::instance()->getAdminPageUrl( 'wdf-advanced-tools' ) ?>"><?php _e( "Finish Setup", cp_defender()->domain ) ?></a>
+                                <a href="<?php echo \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-advanced-tools' ) ?>"><?php _e( "Finish Setup", cp_defender()->domain ) ?></a>
                             </div>
 						<?php endif; ?>
                         <p>

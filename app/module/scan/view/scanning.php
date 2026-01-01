@@ -19,7 +19,7 @@
         </div>
     </div>
 </div>
-<dialog id="scanning" class="<?php echo cp_defender()->isFree ? 'scanning-free' : null ?>">
+<dialog id="scanning">
     <div class="line">
 		<?php _e( "Defender is scanning your files for malicious code. This will take a few minutes depending on the size of your website.", cp_defender()->domain ) ?>
     </div>
@@ -42,13 +42,5 @@
 		wp_nonce_field( 'processScan' );
 		?>
     </form>
-	<?php if ( cp_defender()->isFree == true ): ?>
-        <div class="presale-text">
-            <div>
-				<?php printf( __( "Did you know the Pro version of Defender comes with advanced full code scanning and automated reporting?
-                    Get enhanced security protection as part of a PSOURCE membership including 100+ plugins & themes, 24/7
-                    support and lots of handy site management tools – <a target='_blank' href=\"%s\">Try Defender Pro today for FREE</a>", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->campaignURL('defender_filescanning_modal_inprogress_upsell_link') ) ?>
-            </div>
-        </div>
-	<?php endif; ?>
+
 </dialog>

@@ -54,7 +54,7 @@ class Log_Model extends DB_Model {
 	 * @return string
 	 */
 	public function get_date() {
-		return Utils::instance()->formatDateTime( date( 'Y-m-d H:i:s', $this->date ) );
+		return \CP_Defender\Behavior\Utils::instance()->formatDateTime( date( 'Y-m-d H:i:s', $this->date ) );
 	}
 
 	/**

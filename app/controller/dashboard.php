@@ -46,7 +46,7 @@ class Dashboard extends Controller {
 			return;
 		}
 		$cache = WP_Helper::getCache();
-		$cache->set( cp_defender()->isFree ? 'wdf_isActivated' : 'isActivated', 1, 0 );
+		$cache->set( 'wdf_isActivated', 1, 0 );
 		wp_send_json_success();
 	}
 
@@ -137,7 +137,7 @@ class Dashboard extends Controller {
 		$day         = $params['day'];
 		$time        = $params['time'];
 		$allowedFreq = array( 1, 7, 30 );
-		if ( ! in_array( $frequency, $allowedFreq ) || ! in_array( $day, Utils::instance()->getDaysOfWeek() ) || ! in_array( $time, Utils::instance()->getTimes() ) ) {
+		if ( ! in_array( $frequency, $allowedFreq ) || ! in_array( $day, \CP_Defender\Behavior\Utils::instance()->getDaysOfWeek() ) || ! in_array( $time, \CP_Defender\Behavior\Utils::instance()->getTimes() ) ) {
 			wp_send_json_error();
 		}
 		$settings            = Settings::instance();
@@ -248,7 +248,7 @@ class Dashboard extends Controller {
 	 * @param $action
 	 */
 	public function get_stats( $params, $action ) {
-		$stats = Utils::instance()->generateStats();
+		$stats = \CP_Defender\Behavior\Utils::instance()->generateStats();
 		wp_send_json_success(
 			array(
 				'stats' => $stats
@@ -324,9 +324,15 @@ class Dashboard extends Controller {
 		}
 		
 		$cap        = is_multisite() ? 'manage_network_options' : 'manage_options';
-		$menu_title = cp_defender()->isFree ? esc_html__( "Defender", cp_defender()->domain ) : esc_html__( "Defender Pro", cp_defender()->domain );
+		
+		// Überprüfe, ob der aktuelle Benutzer die erforderliche Berechtigung hat
+		if ( ! current_user_can( $cap ) ) {
+			return;
+		}
+		
+		$menu_title = esc_html__( "Defender", cp_defender()->domain );
 		//$menu_title = sprintf( $menu_title, $indicator );
-		add_menu_page( esc_html__( "Defender Pro", cp_defender()->domain ), $menu_title, $cap, 'cp-defender', array(
+		add_menu_page( esc_html__( "Defender", cp_defender()->domain ), $menu_title, $cap, 'cp-defender', array(
 			&$this,
 			'actionIndex'
 		), $this->get_menu_icon() );
@@ -374,13 +380,13 @@ class Dashboard extends Controller {
 	public function behaviors() {
 		return array(
 			'utils'     => '\CP_Defender\Behavior\Utils',
-			'activator' => cp_defender()->isFree ? '\CP_Defender\Behavior\Activator_Free' : '\CP_Defender\Behavior\Activator',
+			'activator' => '\CP_Defender\Behavior\Activator_Free',
 			'hardener'  => '\CP_Defender\Module\Hardener\Behavior\Widget',
 			'scan'      => '\CP_Defender\Module\Scan\Behavior\Scan',
 			'lockout'   => '\CP_Defender\Module\IP_Lockout\Behavior\Widget',
-			'audit'     => cp_defender()->isFree ? '\CP_Defender\Module\Audit\Behavior\Audit_Free' : '\CP_Defender\Module\Audit\Behavior\Audit',
-			'blacklist' => cp_defender()->isFree ? '\CP_Defender\Behavior\Blacklist_Free' : '\CP_Defender\Behavior\Blacklist',
-			'report'    => cp_defender()->isFree ? '\CP_Defender\Behavior\Report_Free' : '\CP_Defender\Behavior\Report',
+			'audit'     => '\CP_Defender\Module\Audit\Behavior\Audit',
+			'blacklist' => '\CP_Defender\Behavior\Blacklist_Free',
+			'report'    => '\CP_Defender\Behavior\Report_Free',
 			'at'        => '\CP_Defender\Module\Advanced_Tools\Behavior\AT_Widget'
 		);
 	}

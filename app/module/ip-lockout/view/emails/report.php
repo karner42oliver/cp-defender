@@ -494,7 +494,7 @@
                                                         <hr/>
 													<?php endif; ?>
                                                     <p style="Margin: 0; Margin-bottom: 0; color: #555555; font-family: Helvetica, Arial, sans-serif; font-size: 15px; font-weight: normal; line-height: 26px; margin: 0; margin-bottom: 0; padding: 0 0 24px; text-align: left;">
-														<?php printf( __( "You can view the full lockout logs <a href=\"%s\">here</a>", cp_defender()->domain ), Utils::instance()->getAdminPageUrl( \'wdf-ip-lockout\', array( \'view\' => \'logs\' ) ) ) ?>
+														<?php printf( __( "You can view the full lockout logs <a href=\"%s\">here</a>", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( \'wdf-ip-lockout\', array( \'view\' => \'logs\' ) ) ) ?>
                                                         .</p>
                                                 </td>
                                             </tr>
@@ -618,7 +618,7 @@
 														<th class="small-12 large-8 columns first copy" align="center"
 															style="Margin: 0 auto; color: #707070; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 20px; margin: 0 auto; padding: 0; padding-bottom: 0; padding-left: 0; padding-right: 0; text-align: left; width: 394.66667px;">
 																<p style="Margin: 0; Margin-bottom: 0; color: #707070; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 20px; margin: 0; margin-bottom: 0; padding: 0; text-align: center;">
-																	<?php printf( __( "<a href=\"%s\">Configure reporting preferences</a>", cp_defender()->domain ), Utils::instance()->getAdminPageUrl( \'wdf-ip-lockout\', array( \'view\' => \'reporting\' ) ) ) ?>
+																	<?php printf( __( "<a href=\"%s\">Configure reporting preferences</a>", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( \'wdf-ip-lockout\', array( \'view\' => \'reporting\' ) ) ) ?>
 																</p>
 														</th>
 													</tr>

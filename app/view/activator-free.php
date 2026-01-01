@@ -8,12 +8,7 @@
 			<?php wp_nonce_field( 'activateModule' ) ?>
             <div class="columns">
                 <div class="column is-10">
-                    <strong><?php
-						if ( cp_defender()->isFree ) {
-							_e( "File Scanning", cp_defender()->domain );
-						} else {
-							_e( "Automatic File Scans & Reporting", cp_defender()->domain );
-						} ?></strong>
+                    <strong><?php _e( "File Scanning", cp_defender()->domain ); ?></strong>
                     <p class="sub">
 						<?php _e( "Scan your website for file changes, vulnerabilities and injected code and get notified about anything suspicious.", cp_defender()->domain ) ?>
                     </p>

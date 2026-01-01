@@ -542,9 +542,9 @@ class Scan_Api extends Component {
 				$nextTimeString = date( 'Y-m-d', strtotime( $settings->day . ' next month' ) ) . ' ' . $settings->time . ':00';
 				break;
 		}
-		$toUTC = Utils::instance()->localToUtc( $timeString );
+		$toUTC = \CP_Defender\Behavior\Utils::instance()->localToUtc( $timeString );
 		if ( $toUTC < time() ) {
-			return Utils::instance()->localToUtc( $nextTimeString );
+			return \CP_Defender\Behavior\Utils::instance()->localToUtc( $nextTimeString );
 		} else {
 			return $toUTC;
 		}
@@ -611,7 +611,7 @@ class Scan_Api extends Component {
 		}
 
 		$api_endpoint = "https://premium.wpmudev.org/api/defender/v1/signatures";
-		$patterns     = Utils::instance()->devCall( $api_endpoint, array(), array(
+		$patterns     = \CP_Defender\Behavior\Utils::instance()->devCall( $api_endpoint, array(), array(
 			'method' => 'GET'
 		) );
 		if ( is_wp_error( $patterns ) || $patterns == false ) {

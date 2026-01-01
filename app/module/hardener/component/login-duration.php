@@ -129,7 +129,7 @@ class Login_Duration extends Rule {
 					//Check if the current and login times are not the same
 					//so we dont kick out someone who set it to 0
 					if( ( $current_time != $last_login_time ) && $diff > $login_period ) {
-						$current_url = Utils::instance()->currentPageURL();
+						$current_url = \CP_Defender\Behavior\Utils::instance()->currentPageURL();
 						$after_logout_payload = array( 'redirect_to' => $current_url, 'msg'=>'session_expired' );
 						if ( is_multisite() ) {
 							set_site_transient( 'defender_logout_payload', $after_logout_payload, 30 * 60 );

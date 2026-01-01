@@ -37,7 +37,7 @@ class DB_Prefix_Service extends Rule_Service implements IRule_Service {
 			return new \WP_Error( Error_Code::UNKNOWN_WPCONFIG, __( "Your wp-config.php was modified by a 3rd party, this will cause conflict with Defender. Please revert it to original for updating your database prefix", cp_defender()->domain ) );
 		}
 
-		if ( ! Utils::instance()->isActivatedSingle() ) {
+		if ( ! \CP_Defender\Behavior\Utils::instance()->isActivatedSingle() ) {
 			//validate if this network is too big, then we will prevent it
 			$sites = get_sites( array(
 				'count' => true

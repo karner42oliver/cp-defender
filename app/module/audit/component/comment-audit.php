@@ -109,7 +109,7 @@ class Comment_Audit extends Event_Abstract {
 		$post            = get_post( $comment_data['comment_post_ID'] );
 		$post_type       = get_post_type_object( $post->post_type );
 		$post_type_label = strtolower( $post_type->labels->singular_name );
-		$text            = sprintf( esc_html__( "User %s submitted a duplicate comment on %s \"%s\"", cp_defender()->domain ), is_user_logged_in() ? Utils::instance()->getDisplayName( get_current_user_id() ) : $comment_data['comment_author'], $post_type_label, $post->post_title );
+		$text            = sprintf( esc_html__( "User %s submitted a duplicate comment on %s \"%s\"", cp_defender()->domain ), is_user_logged_in() ? \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ) : $comment_data['comment_author'], $post_type_label, $post->post_title );
 
 		return array( $text, $post_type_label );
 	}
@@ -127,9 +127,9 @@ class Comment_Audit extends Event_Abstract {
 		$post_type_label = strtolower( $post_type->labels->singular_name );
 		$text            = false;
 		if ( $old_stat == 'unapproved' && $new_stat == 'approved' ) {
-			$text = sprintf( esc_html__( "%s approved comment ID %s from %s, on %s \"%s\"", cp_defender()->domain ), Utils::instance()->getDisplayName( get_current_user_id() ), $comment->comment_ID, $comment->comment_author, $post_type_label, $post->post_title );
+			$text = sprintf( esc_html__( "%s approved comment ID %s from %s, on %s \"%s\"", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $comment->comment_ID, $comment->comment_author, $post_type_label, $post->post_title );
 		} elseif ( $new_stat == 'unapproved' && $old_stat == 'approved' ) {
-			$text = sprintf( esc_html__( "%s unapproved comment ID %s from %s, on %s \"%s\"", cp_defender()->domain ), Utils::instance()->getDisplayName( get_current_user_id() ), $comment->comment_ID, $comment->comment_author, $post_type_label, $post->post_title );
+			$text = sprintf( esc_html__( "%s unapproved comment ID %s from %s, on %s \"%s\"", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $comment->comment_ID, $comment->comment_author, $post_type_label, $post->post_title );
 		}
 
 		return array( $text, $post_type_label );
@@ -193,27 +193,27 @@ class Comment_Audit extends Event_Abstract {
 				break;
 			case 'deleted_comment':
 				$text = sprintf( esc_html__( "%s deleted comment ID %s, comment author: %s on %s \"%s\"", cp_defender()->domain ),
-					Utils::instance()->getDisplayName( get_current_user_id() ), $comment_id, $comment['comment_author'], $post_type_label, $post->post_title );
+					\CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $comment_id, $comment['comment_author'], $post_type_label, $post->post_title );
 				break;
 			case 'trash_comment':
 				$text = sprintf( esc_html__( "%s trashed comment ID %s, comment author: %s on %s \"%s\"", cp_defender()->domain ),
-					Utils::instance()->getDisplayName( get_current_user_id() ), $comment_id, $comment['comment_author'], $post_type_label, $post->post_title );
+					\CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $comment_id, $comment['comment_author'], $post_type_label, $post->post_title );
 				break;
 			case 'untrash_comment':
 				$text = sprintf( esc_html__( "%s untrashed comment ID %s, comment author: %s on %s \"%s\"", cp_defender()->domain ),
-					Utils::instance()->getDisplayName( get_current_user_id() ), $comment_id, $comment['comment_author'], $post_type_label, $post->post_title );
+					\CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $comment_id, $comment['comment_author'], $post_type_label, $post->post_title );
 				break;
 			case 'spam_comment':
 				$text = sprintf( esc_html__( "%s marked comment ID %s, comment author: %s on %s \"%s\" as spam", cp_defender()->domain ),
-					Utils::instance()->getDisplayName( get_current_user_id() ), $comment_id, $comment['comment_author'], $post_type_label, $post->post_title );
+					\CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $comment_id, $comment['comment_author'], $post_type_label, $post->post_title );
 				break;
 			case 'unspam_comment':
 				$text = sprintf( esc_html__( "%s unmarked comment ID %s, comment author: %s on %s \"%s\" as spam", cp_defender()->domain ),
-					Utils::instance()->getDisplayName( get_current_user_id() ), $comment_id, $comment['comment_author'], $post_type_label, $post->post_title );
+					\CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $comment_id, $comment['comment_author'], $post_type_label, $post->post_title );
 				break;
 			case 'edit_comment':
 				$text = sprintf( esc_html__( "%s edited comment ID %s, comment author: %s on %s \"%s\"", cp_defender()->domain ),
-					Utils::instance()->getDisplayName( get_current_user_id() ), $comment_id, $comment['comment_author'], $post_type_label, $post->post_title );
+					\CP_Defender\Behavior\Utils::instance()->getDisplayName( get_current_user_id() ), $comment_id, $comment['comment_author'], $post_type_label, $post->post_title );
 				break;
 			default:
 				return false;

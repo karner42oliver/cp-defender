@@ -93,7 +93,7 @@ class Protect_Information_Service extends Rule_Service implements IRule_Service 
 	 * @return array
 	 */
 	protected static function apache_rule() {
-		$version = Utils::instance()->determineApacheVersion();
+		$version = \CP_Defender\Behavior\Utils::instance()->determineApacheVersion();
 		if ( floatval( $version ) >= 2.4 ) {
 			$rules    = array(
 				PHP_EOL . '## WP Defender - Prevent information disclosure ##' . PHP_EOL,
