@@ -11,10 +11,10 @@ jQuery(function ($) {
             Defender.showNotification('error', data.data.message);
         }
     })
-    $('.deactivate-2factor').click(function () {
+    $('body').on('click', '.deactivate-2factor', function () {
         $('#advanced-settings-frm').append('<input type="hidden" name="enabled" value="0"/>');
         $(this).attr('disabled', 'disabled');
-        $('#advanced-settings-frm').submit();
+        $('#advanced-settings-frm').trigger('submit');
     })
 });
 window.Adtools = window.Adtools || {};

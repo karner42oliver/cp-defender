@@ -208,7 +208,7 @@ class Email_Search extends Component {
                     })
                 }
 
-                $('#add-receipt').click(function () {
+                jQuery('body').on('click', '#add-receipt', function () {
                     var that = $(this);
                     $.ajax({
                         type: 'POST',

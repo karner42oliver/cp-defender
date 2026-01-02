@@ -15,14 +15,14 @@ jQuery(function ($) {
         }
     });
     //processing scan
-    if ($('#scanning').size() > 0) {
+    if ($('#scanning').length > 0) {
         $('body').addClass('wpmud');
         WDP.showOverlay("#scanning", {
             title: scan.scanning_title,
             class: 'no-close cp-defender scanning'
         });
     }
-    if ($('#process-scan').size() > 0) {
+    if ($('#process-scan').length > 0) {
         $('#process-scan').submit();
         $('div.wdf-scanning').on('form-submitted', function (e, data, form) {
             if (form.attr('id') != 'process-scan') {
@@ -35,7 +35,7 @@ jQuery(function ($) {
                 $('.scan-progress-text span').text(data.data.percent + '%');
                 $('.scan-progress-bar span').css('width', data.data.percent + '%');
                 setTimeout(function () {
-                    $('#process-scan').submit();
+                    $('#process-scan').trigger('submit');
                 }, 1500);
             }
         })
@@ -45,7 +45,7 @@ jQuery(function ($) {
             }
             //try to reup
             setTimeout(function () {
-                $('#process-scan').submit();
+                $('#process-scan').trigger('submit');
             }, 1500);
         })
     }
@@ -166,19 +166,19 @@ jQuery(function ($) {
         }
     });
 
-    $('select[name="frequency"]').change(function () {
+    $('select[name="frequency"]').on('change', function () {
         if ($(this).val() == '1') {
             $(this).closest('.schedule-box').find('div.days-container').hide();
         } else {
             $(this).closest('.schedule-box').find('div.days-container').show();
         }
-    }).change();
+    }).trigger('change');
 
     //bulk
-    $('#apply-all').click(function () {
+    $('#apply-all').on('click', function () {
         $('.scan-chk').prop('checked', $(this).prop('checked'));
     });
-    $('.scan-bulk-frm').submit(function () {
+    $('.scan-bulk-frm').on('submit', function () {
         var data = $(this).serialize();
         $('.scan-chk').each(function () {
             if ($(this).prop('checked') == true) {
@@ -208,10 +208,10 @@ jQuery(function ($) {
         return false;
     });
 
-    $('.column-col_action a').click(function () {
+    $('.column-col_action a').on('click', function () {
         setTimeout(function () {
-            if ($('.source-code:visible').size() > 0) {
-                $('.source-code:visible').find('form').submit();
+            if ($('.source-code:visible').length > 0) {
+                $('.source-code:visible').find('form').trigger('submit');
             }
         }, 500)
     })

@@ -429,7 +429,7 @@ WDP.prepareOverlay = function() {
 		WDP.overlay.close.appendTo(WDP.overlay.box_title);
 		WDP.overlay.wrapper.appendTo('body');
 
-		WDP.overlay.close.click(WDP.closeOverlay);
+		WDP.overlay.close.on('click', WDP.closeOverlay);
 	}
 
 	return true;
@@ -746,7 +746,7 @@ WDP.wpmuSelect = function(el) {
 		value.on("click", stateToggle);
 		jq.on("focus", stateOpen);
 
-		jQuery(document).click(function onOutsideClick(ev) {
+		jQuery(document).on("click", function onOutsideClick(ev) {
 			var jq = jQuery(ev.target),
 				sel_id;
 

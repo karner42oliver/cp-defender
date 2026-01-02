@@ -149,7 +149,7 @@ class Queue extends Component implements \Iterator, \ArrayAccess, \Countable {
 	/**
 	 * @return int
 	 */
-	public function count() {
+	public function count(): int {
 		return count( $this->data );
 	}
 

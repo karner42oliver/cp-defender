@@ -27,7 +27,7 @@
 </div>
 <script type="text/javascript">
     jQuery(function ($) {
-        $('#disableOTP').click(function () {
+        $('body').on('click', '#disableOTP', function () {
             var data = {
                 action: 'defDisableOTP'
             }

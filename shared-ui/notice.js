@@ -20,7 +20,7 @@ jQuery(function() {
 		el_notice.addClass("active");
 
 		// Dismiss the notice without any action.
-		btn_dismiss.click(function(ev) {
+		btn_dismiss.on('click', function(ev) {
 			ev.preventDefault();
 			notify_wordpress("wdev_notice_dismiss", btn_dismiss.data("msg"));
 		});

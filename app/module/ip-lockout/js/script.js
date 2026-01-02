@@ -15,8 +15,8 @@ jQuery(function ($) {
         }
     });
     setTimeout(function () {
-        if ($('#moving-data').size() > 0) {
-            $('#moving-data').submit();
+        if ($('#moving-data').length > 0) {
+            $('#moving-data').trigger('submit');
         }
     }, 1000);
     $('div.iplockout').on('form-submitted', function (e, data, form) {
@@ -37,7 +37,7 @@ jQuery(function ($) {
     });
     //media uploader
     var mediaUploader;
-    $('.file-picker').click(function () {
+    $('body').on('click', '.file-picker', function () {
         if (mediaUploader) {
             mediaUploader.open();
             return;
@@ -59,7 +59,7 @@ jQuery(function ($) {
         // Open the uploader dialog
         mediaUploader.open();
     })
-    $('.btn-import-ip').click(function () {
+    $('body').on('click', '.btn-import-ip', function () {
         var that = $(this);
         $.ajax({
             type: 'POST',
@@ -83,13 +83,13 @@ jQuery(function ($) {
             }
         })
     });
-    $('select[name="report_frequency"]').change(function () {
+    $('select[name="report_frequency"]').on('change', function () {
         if ($(this).val() == '1') {
             $(this).closest('.schedule-box').find('div.days-container').hide();
         } else {
             $(this).closest('.schedule-box').find('div.days-container').show();
         }
-    }).change();
+    }).trigger('change');
 
     $('body').on('click', '.ip-action', function (e) {
         e.preventDefault();
@@ -123,7 +123,7 @@ jQuery(function ($) {
         var that = $(this);
         cleaningLog(that);
     });
-    if ($('#defLockoutUpgrade').size() > 0) {
+    if ($('#defLockoutUpgrade').length > 0) {
         $('body').addClass('wpmud');
         WDP.showOverlay("#defLockoutUpgrade", {
             title: 'Updating...',
@@ -156,8 +156,8 @@ jQuery(function ($) {
         })
     }
 
-    $('input[name="login_protection"], input[name="detect_404"]').change(function () {
-        $('#settings-frm').submit();
+    $('input[name="login_protection"], input[name="detect_404"]').on('change', function () {
+        $('#settings-frm').trigger('submit');
     })
 });
 
@@ -190,7 +190,7 @@ WDIP.formHandler = function () {
                     location.href = data.data.url;
                 } else {
                     var buttons = that.find('.button');
-                    if (buttons.size() > 0) {
+                    if (buttons.length > 0) {
                         buttons.removeAttr('disabled');
                     }
                     jq('div.iplockout').trigger('form-submitted', [data, that])
@@ -270,7 +270,7 @@ WDIP.buildFilterQuery = function () {
 WDIP.pullSummaryData = function () {
     var jq = jQuery;
     var box = jq('#lockoutSummary');
-    if (box.size() > 0) {
+    if (box.length > 0) {
         jq.ajax({
             type: 'POST',
             url: ajaxurl,

@@ -37,13 +37,13 @@ jQuery(function ($) {
         }
     });
 
-    $('select[name="frequency"]').change(function () {
+    $('select[name="frequency"]').on('change', function () {
         if ($(this).val() == '1') {
             $(this).closest('.schedule-box').find('div.days-container').hide();
         } else {
             $(this).closest('.schedule-box').find('div.days-container').show();
         }
-    }).change();
+    }).trigger('change');
     $('body').on('click', '.show-info', function (e) {
         e.preventDefault();
         var target = $($(this).data('target'));
@@ -59,7 +59,7 @@ jQuery(function ($) {
     })
 
     //calendar
-    if ($('.wd-calendar').size() > 0) {
+    if ($('.wd-calendar').length > 0) {
         var start = moment().subtract(7, 'days');
         var end = moment();
         var maxDate = end;
@@ -105,7 +105,7 @@ jQuery(function ($) {
             }
         });
     }
-    if ($('.new-event-count').size() > 0) {
+    if ($('.new-event-count').length > 0) {
         //setTimeout(WDAudit.listenForEvents(), 10000)
     }
 
@@ -149,21 +149,21 @@ jQuery(function ($) {
         }
     });
 
-    if ($('.audit-widget').size() > 0) {
-        $('.audit-widget').submit();
+    if ($('.audit-widget').length > 0) {
+        $('.audit-widget').trigger('submit');
     }
 
-    if ($('.count-7-days').size() > 0) {
-        $('.count-7-days').submit();
+    if ($('.count-7-days').length > 0) {
+        $('.count-7-days').trigger('submit');
     }
 
-    $('#toggle_audit_logging').change(function () {
+    $('body').on('change', '#toggle_audit_logging', function () {
         if ($(this).prop('checked') == false) {
-            $('.active-audit').submit();
+            $('.active-audit').trigger('submit');
         }
     })
-    if ($('#audit-table-container').size() > 0) {
-        if ($('#audit-table-container').find('table').size() == 0) {
+    if ($('#audit-table-container').length > 0) {
+        if ($('#audit-table-container').find('table').length == 0) {
             var query = WDAudit.buildFilterQuery();
             WDAudit.ajaxPull(query, function () {
                 jQuery("#audit-table-container select").each(function () {
@@ -297,8 +297,8 @@ WDAudit.buildFilterQuery = function (currentInput) {
         } else if (jq(this).attr('name') != undefined) {
             if (jq(this).attr('name') == 'date_from') {
                 var date = jq(this).val().split('-');
-                query.push('date_from=' + jq.trim(date[0]));
-                query.push('date_to=' + jq.trim(date[1]));
+                query.push('date_from=' + date[0].trim());
+                query.push('date_to=' + date[1].trim());
             } else {
                 query.push(jq(this).attr('name') + '=' + jq(this).val());
             }
@@ -324,7 +324,7 @@ WDAudit.ajaxPull = function (query, callback) {
             if (data.success == 1) {
                 if (data.data.html != undefined) {
                     var html = jq(data.data.html);
-                    if (html.find('#audit-table') > 0 && jq('#audit-table').size() > 0) {
+                    if (html.find('#audit-table') > 0 && jq('#audit-table').length > 0) {
                         jq('#audit-table').replaceWith(html.filter('#audit-table').first());
                         jq('.nav').replaceWith(html.filter('.bulk-nav').first().find('.nav').first());
                         callback();

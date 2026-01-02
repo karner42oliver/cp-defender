@@ -101,6 +101,44 @@ class CP_Defender {
 
 	public function loadTextdomain() {
 		load_plugin_textdomain( $this->domain, false, $this->plugin_path . 'languages' );
+		
+		// Replace "WordPress" with "ClassicPress" in all plugin texts when running on ClassicPress
+		if ( function_exists( 'classicpress_version' ) ) {
+			add_filter( 'gettext', array( &$this, 'classicpress_text_replacer' ), 20, 3 );
+			add_filter( 'ngettext', array( &$this, 'classicpress_plural_replacer' ), 20, 5 );
+		}
+	}
+	
+	/**
+	 * Replace WordPress with ClassicPress in all plugin texts
+	 */
+	public function classicpress_text_replacer( $translated, $text, $domain ) {
+		// Only modify our own plugin's texts
+		if ( $domain !== $this->domain && $domain !== 'default' ) {
+			return $translated;
+		}
+		
+		// Replace WordPress with ClassicPress
+		$translated = str_replace( 'WordPress', 'ClassicPress', $translated );
+		$translated = str_replace( 'wordpress', 'classicpress', $translated );
+		
+		return $translated;
+	}
+	
+	/**
+	 * Replace WordPress with ClassicPress in plural texts
+	 */
+	public function classicpress_plural_replacer( $translated, $single, $plural, $number, $domain ) {
+		// Only modify our own plugin's texts
+		if ( $domain !== $this->domain && $domain !== 'default' ) {
+			return $translated;
+		}
+		
+		// Replace WordPress with ClassicPress
+		$translated = str_replace( 'WordPress', 'ClassicPress', $translated );
+		$translated = str_replace( 'wordpress', 'classicpress', $translated );
+		
+		return $translated;
 	}
 
 	/**

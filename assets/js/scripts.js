@@ -1,7 +1,7 @@
 jQuery(function ($) {
     //blacklist helper
-    if ($('.blacklist-widget').size() > 0) {
-        $('.blacklist-widget').submit(function () {
+    if ($('.blacklist-widget').length > 0) {
+        $('body').on('submit', '.blacklist-widget', function () {
             var that = $(this);
             $.ajax({
                 type: 'POST',
@@ -13,7 +13,8 @@ jQuery(function ($) {
                 }
             })
             return false;
-        }).submit();
+        });
+        $('.blacklist-widget').trigger('submit');
     }
     $('body').on('submit', '.toggle-blacklist-widget', function () {
         var that = $(this);
@@ -38,9 +39,9 @@ jQuery(function ($) {
         return false;
     })
     $('body').on('change', '#toggle_blacklist', function () {
-        $('.toggle-blacklist-widget').submit();
+        $('.toggle-blacklist-widget').trigger('submit');
     })
-    $('[rel="show-filter"]').click(function () {
+    $('[rel="show-filter"]').on('click', function () {
         var target = $($(this).data('target'));
         if (target.is(':visible')) {
             target.addClass('wd-hide');
@@ -49,19 +50,19 @@ jQuery(function ($) {
         }
     });
 
-    if ($('#activator').size() > 0) {
+    if ($('#activator').length > 0) {
         WDP.showOverlay("#activator", {
             title: dashboard.activator_title,
             class: 'no-close cp-defender wd-activator'
         });
     }
 
-    if ($('#requirement').size() > 0) {
+    if ($('#requirement').length > 0) {
         WDP.showOverlay("#requirement", {
             class: 'no-close cp-defender wd-requirement'
         });
     }
-    if ($('#wpmudev-auth-modal').size() > 0) {
+    if ($('#wpmudev-auth-modal').length > 0) {
         WDP.showOverlay("#wpmudev-auth-modal", {
             class: 'no-close cp-defender wpmudev-auth-modal',
             title: 'Create Account <span>Already have an account? <a href="">Log in</a></span>'
@@ -139,7 +140,7 @@ jQuery(function ($) {
             location.href = url;
         }
     })
-    $('.cp-defender a[disabled="disabled"]').click(function (e) {
+    $('body').on('click', '.cp-defender a[disabled="disabled"]', function (e) {
         e.preventDefault()
     })
 })
@@ -148,7 +149,7 @@ window.Defender = window.Defender || {};
 //Added extra parameter to allow for some actions to keep modal open
 Defender.showNotification = function (type, message, closeModal) {
     var jq = jQuery;
-    if (jq('body').find('.floated-alert').size() > 0) {
+    if (jq('body').find('.floated-alert').length > 0) {
         return;
     }
     var div = jq('<div class="floated-alert"/>');

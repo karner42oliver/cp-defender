@@ -60,15 +60,15 @@
 <script type="text/javascript">
     jQuery(function ($) {
         $('#def2qr').hide();
-        $('#show2AuthActivator').click(function () {
+        $('body').on('click', '#show2AuthActivator', function () {
             $('#def2').hide();
             $('#def2qr').show();
         });
-        $('#hide2AuthActivator').click(function () {
+        $('body').on('click', '#hide2AuthActivator', function () {
             $('#def2qr').hide();
             $('#def2').show();
         })
-        $('#verifyOTP').click(function () {
+        $('body').on('click', '#verifyOTP', function () {
             var data = {
                 action: 'defVerifyOTP',
                 otp: $('#otpCode').val(),

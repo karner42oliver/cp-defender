@@ -243,7 +243,7 @@ do_action( 'login_header' );
             jQuery(function ($) {
                 $('.def-ajaxloader').hide();
                 var isSent = false;
-                $('#lostPhone').click(function (e) {
+                $('body').on('click', '#lostPhone', function (e) {
                     e.preventDefault();
                     var that = $(this);
                     if (isSent == false) {

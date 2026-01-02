@@ -133,7 +133,7 @@ jQuery(function ($) {
             if ( update_rules ) {
                 form.closest('.rule').slideUp(500, function () {
                     $(this).remove();
-                    if ($('.rule').size() == 0) {
+                    if ($('.rule').length == 0) {
                         setTimeout(function () {
                             location.reload();
                         }, 500)
@@ -210,17 +210,17 @@ WDHardener.formHandler = function () {
 
 WDHardener.rules = function () {
     var jq = jQuery;
-    if (jq('.rules.ignored').size() > 0) {
+    if (jq('.rules.ignored').length > 0) {
         //no animation for ignored
         return;
     }
     var id = window.location.hash.substr(1);
-    if (id == undefined) {
-        jq('.rule').first().removeClass('closed');
-    } else {
+    if (id && id.length > 0) {
         jq('#' + id).removeClass('closed');
+    } else {
+        jq('.rule').first().removeClass('closed');
     }
-    jq('.rule .rule-title').click(function () {
+    jq(document).on('click', '.rule .rule-title', function () {
         var parent = jq(this).closest('.rule');
         var otherRules = jq('.rule').not(parent);
         otherRules.each(function () {
