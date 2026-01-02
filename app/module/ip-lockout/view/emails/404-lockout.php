@@ -460,7 +460,7 @@
 														<?php printf( __( "We've just locked out the host <strong>%s</strong> from %s due to more than <strong>%s</strong> 404 requests for the file <strong>%s</strong>. They have been locked out for <strong>%s seconds.</strong>", cp_defender()->domain ), $ip, network_site_url(), $setting->detect_404_threshold, $uri, $setting->detect_404_lockout_duration ) ?>
 													</p>
 													<p style="Margin: 0; Margin-bottom: 0; color: #555555; font-family: Helvetica, Arial, sans-serif; font-size: 15px; font-weight: normal; line-height: 26px; margin: 0; margin-bottom: 0; padding: 0 0 24px; text-align: left;">
-														<?php printf( __( "You can view the full lockout logs <a href=\"%s\">here</a>", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( \'wdf-ip-lockout\', array( \'view\' => \'logs\' ) ) ) ?>
+														<?php printf( __( "You can view the full lockout logs <a href=\"%s\">here</a>", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'logs' ) ) ) ?>
 														.</p>
 												</td>
 											</tr>
@@ -478,7 +478,7 @@
 														<?php esc_html_e( "Stay vigilant.", cp_defender()->domain ) ?></p>
 													<p class="last-item"
 													   style="Margin: 0; Margin-bottom: 0; color: #555555; font-family: Helvetica, Arial, sans-serif; font-size: 15px; font-weight: normal; line-height: 26px; margin: 0; margin-bottom: 0; padding: 0; text-align: left;">
-														<strong><?php esc_html_e( "WP Defender", cp_defender()->domain ) ?></strong>
+														<strong><?php esc_html_e( "CP Security", cp_defender()->domain ) ?></strong>
 														<br>
 														<?php esc_html_e( "Security Hero", cp_defender()->domain ) ?>
 														<br/>
@@ -584,7 +584,7 @@
 														<th class="small-12 large-8 columns first copy" align="center"
 															style="Margin: 0 auto; color: #707070; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 20px; margin: 0 auto; padding: 0; padding-bottom: 0; padding-left: 0; padding-right: 0; text-align: left; width: 394.66667px;">
 																<p style="Margin: 0; Margin-bottom: 0; color: #707070; font-family: Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 20px; margin: 0; margin-bottom: 0; padding: 0; text-align: center;">
-																	<?php printf( __( "<a href=\"%s\">Configure reporting preferences</a>", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( \'wdf-ip-lockout\', array( \'view\' => \'reporting\' ) ) ) ?>
+																	<?php printf( __( "<a href=\"%s\">Configure reporting preferences</a>", cp_defender()->domain ), \CP_Defender\Behavior\Utils::instance()->getAdminPageUrl( 'wdf-ip-lockout', array( 'view' => 'reporting' ) ) ) ?>
 																</p>
 														</th>
 													</tr>

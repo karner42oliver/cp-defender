@@ -1,12 +1,11 @@
 <?php
 /**
- * Plugin Name: CP Defender
+ * Plugin Name: CP Security
  * Plugin URI: https://premium.wpmudev.org/project/cp-defender/
- * Version:     1.7.5
- * Description: Get regular security scans, vulnerability reports, safety recommendations and customized hardening for your site in just a few clicks. Defender is the analyst and enforcer who never sleeps.
+ * Version:     1.0.0
+ * Description: Get regular security scans, vulnerability reports, safety recommendations and customized hardening for your site in just a few clicks. CP Security is the analyst and enforcer who never sleeps.
  * Author:      PSOURCE
- * Author URI:  http://premium.wpmudev.org/
- * WDP ID:      1081723
+ * Author URI:  https://github.com/Power-Source
  * License:     GNU General Public License (Version 2 - GPLv2)
  * Text Domain: wpdef
  * Network: true
